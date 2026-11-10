@@ -97,20 +97,39 @@ export default function HomePage() {
                 Resalta tu belleza con <span className="italic font-normal text-rose-600 font-serif">estilo</span> y elegancia
               </h1>
 
-              {/* Bio en viñetas elegantes */}
-              <div className="flex flex-wrap justify-center lg:justify-start gap-2.5 pt-1">
-                {BUSINESS_CONFIG.bioItems.map((item, idx) => (
-                  <span
-                    key={idx}
-                    className="inline-flex items-center text-xs font-medium text-stone-700 bg-white/90 border border-rose-100/80 px-3.5 py-1.5 rounded-full shadow-xs hover:border-rose-300 hover:shadow-sm transition-all"
-                  >
-                    {item}
-                  </span>
-                ))}
+              {/* Bio en cuadrícula elegante 2x2 en móvil / flex en desktop */}
+              <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap justify-center lg:justify-start pt-1 max-w-lg mx-auto lg:mx-0">
+                <div className="flex items-center gap-2 bg-white/90 backdrop-blur-xs border border-rose-100/90 px-3 py-2 rounded-2xl shadow-2xs hover:border-rose-300 transition-all text-left">
+                  <div className="h-6 w-6 rounded-full bg-rose-50 flex items-center justify-center shrink-0">
+                    <Award className="h-3.5 w-3.5 text-rose-600" />
+                  </div>
+                  <span className="text-[11px] sm:text-xs font-semibold text-stone-800">Técnica Profesional</span>
+                </div>
+
+                <div className="flex items-center gap-2 bg-white/90 backdrop-blur-xs border border-rose-100/90 px-3 py-2 rounded-2xl shadow-2xs hover:border-rose-300 transition-all text-left">
+                  <div className="h-6 w-6 rounded-full bg-rose-50 flex items-center justify-center shrink-0">
+                    <Sparkles className="h-3.5 w-3.5 text-rose-600" />
+                  </div>
+                  <span className="text-[11px] sm:text-xs font-semibold text-stone-800">Social & Artístico</span>
+                </div>
+
+                <div className="flex items-center gap-2 bg-white/90 backdrop-blur-xs border border-rose-100/90 px-3 py-2 rounded-2xl shadow-2xs hover:border-rose-300 transition-all text-left">
+                  <div className="h-6 w-6 rounded-full bg-rose-50 flex items-center justify-center shrink-0">
+                    <Heart className="h-3.5 w-3.5 text-rose-600" />
+                  </div>
+                  <span className="text-[11px] sm:text-xs font-semibold text-stone-800">Novias & 15 Años</span>
+                </div>
+
+                <div className="flex items-center gap-2 bg-white/90 backdrop-blur-xs border border-rose-100/90 px-3 py-2 rounded-2xl shadow-2xs hover:border-rose-300 transition-all text-left">
+                  <div className="h-6 w-6 rounded-full bg-rose-50 flex items-center justify-center shrink-0">
+                    <ShieldCheck className="h-3.5 w-3.5 text-rose-600" />
+                  </div>
+                  <span className="text-[11px] sm:text-xs font-semibold text-stone-800">Piel Blindada 16h+</span>
+                </div>
               </div>
 
-              <p className="text-stone-600 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
-                Especialista en novias, eventos sociales, quinceañeras y producciones artísticas en Medellín. Más de 5 años diseñando la piel perfecta con cosmética internacional y técnicas de piel blindada.
+              <p className="text-stone-600 text-sm sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0">
+                Especialista en novias, eventos sociales, quinceañeras y producciones artísticas en Medellín. Más de 5 años diseñando la piel perfecta con cosmética de alta gama y técnicas de piel blindada.
               </p>
 
               {/* Botones de Acción */}
@@ -135,7 +154,7 @@ export default function HomePage() {
               </div>
 
               {/* Trust Badges */}
-              <div className="pt-6 border-t border-rose-100/80 flex items-center justify-center lg:justify-start gap-8 text-xs text-stone-500">
+              <div className="pt-6 border-t border-rose-100/80 flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-7 text-[11px] sm:text-xs text-stone-500">
                 <div className="flex items-center gap-1.5">
                   <ShieldCheck className="h-4 w-4 text-rose-500" />
                   <span>Piel Blindada 16h+</span>

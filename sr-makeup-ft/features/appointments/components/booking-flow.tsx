@@ -26,6 +26,7 @@ import { BUSINESS_CONFIG } from "@/shared/constants/business";
 import { formatCurrency } from "@/shared/lib/utils";
 import { apiClient } from "@/shared/lib/api-client";
 import { appointmentsStore, ExtendedAppointment } from "@/shared/lib/appointments-store";
+import { LuxuryDatePicker } from "./luxury-date-picker";
 
 interface BookingFlowProps {
   initialServiceId?: string;
@@ -575,19 +576,11 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
                 </div>
               )}
 
-              {/* Selector de Fecha */}
-              <div className="space-y-2 pt-2 border-t border-rose-50">
-                <label className="text-xs font-semibold text-stone-700 uppercase tracking-wider flex items-center gap-1.5">
-                  <CalendarIcon className="h-4 w-4 text-rose-500" />
-                  <span>Selecciona la Fecha del Evento</span>
-                </label>
-                <input
-                  type="date"
-                  required
-                  min={new Date().toISOString().split("T")[0]}
-                  value={selectedDate}
-                  onChange={(e) => setSelectedDate(e.target.value)}
-                  className="w-full rounded-xl border border-stone-200 bg-stone-50/50 p-3 text-sm text-stone-900 focus:border-rose-400 focus:bg-white focus:outline-none"
+              {/* Selector de Fecha de Lujo */}
+              <div className="pt-2 border-t border-rose-50">
+                <LuxuryDatePicker
+                  selectedDate={selectedDate}
+                  onDateChange={setSelectedDate}
                 />
               </div>
             </div>
