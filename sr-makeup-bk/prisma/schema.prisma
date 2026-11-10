@@ -1,0 +1,84 @@
+// Prisma Schema para SR Makeup Studio
+datasource db {
+  provider = "postgresql" // Puedes cambiar a "sqlite" si quieres desarrollo local sin base de datos externa
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  ADMIN
+  CLIENT
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         Role     @default(ADMIN)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Service {
+  id              String        @id @default(uuid())
+  title           String
+  slug            String        @unique
+  description     String
+  price           Float
+  durationMinutes Int           @default(60)
+  category        String // novias, social, quinceaneras, editorial, automaquillaje
+  imageUrl        String?
+  features        String[]      @default([])
+  isActive        Boolean       @default(true)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  appointments    Appointment[]
+
+  @@map("services")
+}
+
+model Appointment {
+  id          String            @id @default(uuid())
+  clientName  String
+  clientEmail String
+  clientPhone String
+  serviceId   String
+  service     Service           @relation(fields: [serviceId], references: [id])
+  date        String // Formato YYYY-MM-DD para fácil consulta de disponibilidad
+  time        String // Formato HH:mm (ej. "09:30 AM")
+  notes       String?
+  status      AppointmentStatus @default(PENDING)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@map("appointments")
+}
+
+model PortfolioItem {
+  id             String   @id @default(uuid())
+  title          String
+  category       String // novias, social, quinceaneras, editorial, automaquillaje
+  imageUrl       String
+  beforeImageUrl String?
+  description    String?
+  productsUsed   String[] @default([])
+  isFeatured     Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("portfolio_items")
+}
+
