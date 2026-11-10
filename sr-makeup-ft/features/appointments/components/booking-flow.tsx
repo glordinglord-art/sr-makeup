@@ -576,168 +576,167 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
                 </div>
               )}
 
-              {/* Selector de Fecha de Lujo */}
+                  {/* Selector de Fecha de Lujo */}
               <div className="pt-2 border-t border-rose-50">
-                <LuxuryDatePicker
-                  selectedDate={selectedDate}
-                  onDateChange={setSelectedDate}
-                />
-              </div>
-            </div>
-
-            {/* Selector de Horario */}
-            <div className="rounded-3xl bg-white border border-rose-100 p-7 shadow-sm space-y-4">
-              <h3 className="font-serif text-lg font-bold text-stone-900 flex items-center gap-2">
-                <Clock className="h-4 w-4 text-rose-500" />
-                <span>Horarios Disponibles</span>
-              </h3>
-              <p className="text-xs text-stone-500">
-                Elige la hora que mejor se ajuste a la hora de salida de tu evento.
-              </p>
-
-              <div className="grid grid-cols-2 gap-2.5 pt-2">
-                {AVAILABLE_TIMES.map((time) => {
-                  const isSelected = selectedTime === time;
-                  const isOccupied = occupiedTimes.includes(time);
-
-                  return (
-                    <button
-                      key={time}
-                      type="button"
-                      disabled={isOccupied}
-                      onClick={() => !isOccupied && setSelectedTime(time)}
-                      className={`p-3 rounded-xl border-2 text-xs font-semibold transition-all flex items-center justify-between ${
-                        isOccupied
-                          ? "border-stone-200 bg-stone-100/80 text-stone-400 cursor-not-allowed line-through opacity-70"
-                          : isSelected
-                          ? "border-rose-500 bg-rose-500 text-white shadow-md shadow-rose-200"
-                          : "border-stone-200 hover:border-rose-300 text-stone-700 bg-white"
-                      }`}
-                    >
-                      <span className="flex items-center gap-1.5">
-                        <span>{time}</span>
-                        {isOccupied && <span className="text-[9px] not-italic text-stone-400 font-normal no-underline">(Ocupado)</span>}
-                      </span>
-                      {isSelected && !isOccupied && <Check className="h-3.5 w-3.5" />}
-                    </button>
-                  );
-                })}
+                  <LuxuryDatePicker
+                    selectedDate={selectedDate}
+                    onDateChange={setSelectedDate}
+                  />
+                </div>
               </div>
 
-              <div className="rounded-2xl bg-rose-50/50 p-4 border border-rose-100/60 text-xs text-stone-600 mt-4 space-y-1">
-                <p className="font-semibold text-stone-800 flex items-center gap-1">
-                  <Sparkles className="h-3.5 w-3.5 text-rose-500" />
-                  <span>Duración estimada: {selectedService.durationMinutes} minutos</span>
+              {/* Selector de Horario */}
+              <div className="rounded-3xl bg-white border border-rose-100 p-7 shadow-sm space-y-4">
+                <h3 className="font-serif text-lg font-bold text-stone-900 flex items-center gap-2">
+                  <Clock className="h-4 w-4 text-rose-500" />
+                  <span>Horarios Disponibles</span>
+                </h3>
+                <p className="text-xs text-stone-500">
+                  Elige la hora que mejor se ajuste a la hora de salida de tu evento.
                 </p>
-                <p className="text-[11px] text-stone-500">
-                  Shirley dedica tiempo exclusivo y sin prisas a cada clienta para un acabado perfecto.
-                </p>
+
+                <div className="grid grid-cols-2 gap-2.5 pt-2">
+                  {AVAILABLE_TIMES.map((time) => {
+                    const isSelected = selectedTime === time;
+                    const isOccupied = occupiedTimes.includes(time);
+
+                    return (
+                      <button
+                        key={time}
+                        type="button"
+                        disabled={isOccupied}
+                        onClick={() => !isOccupied && setSelectedTime(time)}
+                        className={`p-3 rounded-xl border-2 text-xs font-semibold transition-all flex items-center justify-between ${isOccupied
+                            ? "border-stone-200 bg-stone-100/80 text-stone-400 cursor-not-allowed line-through opacity-70"
+                            : isSelected
+                              ? "border-rose-500 bg-rose-500 text-white shadow-md shadow-rose-200"
+                              : "border-stone-200 hover:border-rose-300 text-stone-700 bg-white"
+                          }`}
+                      >
+                        <span className="flex items-center gap-1.5">
+                          <span>{time}</span>
+                          {isOccupied && <span className="text-[9px] not-italic text-stone-400 font-normal no-underline">(Ocupado)</span>}
+                        </span>
+                        {isSelected && !isOccupied && <Check className="h-3.5 w-3.5" />}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <div className="rounded-2xl bg-rose-50/50 p-4 border border-rose-100/60 text-xs text-stone-600 mt-4 space-y-1">
+                  <p className="font-semibold text-stone-800 flex items-center gap-1">
+                    <Sparkles className="h-3.5 w-3.5 text-rose-500" />
+                    <span>Duración estimada: {selectedService.durationMinutes} minutos</span>
+                  </p>
+                  <p className="text-[11px] text-stone-500">
+                    Shirley dedica tiempo exclusivo y sin prisas a cada clienta para un acabado perfecto.
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="flex items-center justify-between pt-4">
-            <Button variant="outline" onClick={() => setStep(1)} className="gap-2">
-              <ChevronLeft className="h-4 w-4" />
-              <span>Atrás</span>
-            </Button>
-
-            <Button size="lg" onClick={handleNextStep} className="gap-2 px-8 font-semibold">
-              <span>Continuar a Tus Datos</span>
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      )}
-
-      {/* PASO 3: DATOS DE CONTACTO */}
-      {step === 3 && (
-        <div className="max-w-2xl mx-auto space-y-6">
-          <div className="text-center space-y-2">
-            <span className="text-xs font-semibold text-rose-500 uppercase tracking-widest">Paso 3 de 3</span>
-            <h2 className="font-serif text-3xl font-bold text-stone-900">
-              Datos para Confirmar tu Reserva
-            </h2>
-            <p className="text-stone-500 text-xs sm:text-sm">
-              Necesitamos tus datos para que Shirley Ram prepare tu espacio y te contacte.
-            </p>
-          </div>
-
-          <form onSubmit={handleConfirmBooking} className="rounded-3xl bg-white border border-rose-100 p-8 shadow-xl space-y-5">
-            {/* Resumen flotante superior */}
-            <div className="rounded-2xl bg-rose-50/70 p-4 border border-rose-100/80 flex items-center justify-between">
-              <div>
-                <span className="text-[10px] text-rose-600 font-bold uppercase tracking-wider block">Resumen</span>
-                <span className="font-serif font-bold text-sm text-stone-900">{selectedService.title}</span>
-                <span className="text-xs text-stone-500 block">
-                  📅 {selectedDate} a las ⏰ {selectedTime} ({locationType === "domicilio" ? "A Domicilio" : "En Estudio"})
-                </span>
-              </div>
-              <span className="font-serif text-xl font-bold text-rose-600">
-                {formatCurrency(selectedService.price)}
-              </span>
-            </div>
-
-            <Input
-              label="Nombre Completo"
-              placeholder="Ej: Laura Gómez"
-              required
-              value={clientName}
-              onChange={(e) => setClientName(e.target.value)}
-            />
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Input
-                label="WhatsApp / Celular"
-                type="tel"
-                placeholder="Ej: 300 123 4567"
-                required
-                value={clientPhone}
-                onChange={(e) => setClientPhone(e.target.value)}
-              />
-              <Input
-                label="Correo Electrónico"
-                type="email"
-                placeholder="laura@ejemplo.com"
-                required
-                value={clientEmail}
-                onChange={(e) => setClientEmail(e.target.value)}
-              />
-            </div>
-
-            <div className="space-y-1.5">
-              <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider">
-                Detalles del evento o vestido (Opcional)
-              </label>
-              <textarea
-                rows={3}
-                placeholder="Cuéntanos si tienes alguna referencia de peinado, color de vestido o solicitud especial..."
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                className="w-full rounded-xl border border-stone-200 bg-stone-50/50 p-3 text-sm text-stone-900 focus:border-rose-400 focus:bg-white focus:outline-none"
-              />
-            </div>
-
-            <div className="flex items-center justify-between pt-4 border-t border-rose-50">
-              <Button type="button" variant="outline" onClick={() => setStep(2)} className="gap-2">
+            <div className="flex items-center justify-between pt-4">
+              <Button variant="outline" onClick={() => setStep(1)} className="gap-2">
                 <ChevronLeft className="h-4 w-4" />
                 <span>Atrás</span>
               </Button>
 
-              <Button
-                type="submit"
-                size="lg"
-                disabled={loading}
-                className="gap-2 px-8 bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 font-bold shadow-md shadow-rose-200"
-              >
-                {loading ? "Registrando Cita..." : "Confirmar y Solicitar Cita"}
-                <CheckCircle2 className="h-4 w-4" />
+              <Button size="lg" onClick={handleNextStep} className="gap-2 px-8 font-semibold">
+                <span>Continuar a Tus Datos</span>
+                <ChevronRight className="h-4 w-4" />
               </Button>
             </div>
-          </form>
-        </div>
+          </div>
       )}
-    </div>
-  );
+
+          {/* PASO 3: DATOS DE CONTACTO */}
+          {step === 3 && (
+            <div className="max-w-2xl mx-auto space-y-6">
+              <div className="text-center space-y-2">
+                <span className="text-xs font-semibold text-rose-500 uppercase tracking-widest">Paso 3 de 3</span>
+                <h2 className="font-serif text-3xl font-bold text-stone-900">
+                  Datos para Confirmar tu Reserva
+                </h2>
+                <p className="text-stone-500 text-xs sm:text-sm">
+                  Necesitamos tus datos para que Shirley Ram prepare tu espacio y te contacte.
+                </p>
+              </div>
+
+              <form onSubmit={handleConfirmBooking} className="rounded-3xl bg-white border border-rose-100 p-8 shadow-xl space-y-5">
+                {/* Resumen flotante superior */}
+                <div className="rounded-2xl bg-rose-50/70 p-4 border border-rose-100/80 flex items-center justify-between">
+                  <div>
+                    <span className="text-[10px] text-rose-600 font-bold uppercase tracking-wider block">Resumen</span>
+                    <span className="font-serif font-bold text-sm text-stone-900">{selectedService.title}</span>
+                    <span className="text-xs text-stone-500 block">
+                      📅 {selectedDate} a las ⏰ {selectedTime} ({locationType === "domicilio" ? "A Domicilio" : "En Estudio"})
+                    </span>
+                  </div>
+                  <span className="font-serif text-xl font-bold text-rose-600">
+                    {formatCurrency(selectedService.price)}
+                  </span>
+                </div>
+
+                <Input
+                  label="Nombre Completo"
+                  placeholder="Ej: Laura Gómez"
+                  required
+                  value={clientName}
+                  onChange={(e) => setClientName(e.target.value)}
+                />
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Input
+                    label="WhatsApp / Celular"
+                    type="tel"
+                    placeholder="Ej: 300 123 4567"
+                    required
+                    value={clientPhone}
+                    onChange={(e) => setClientPhone(e.target.value)}
+                  />
+                  <Input
+                    label="Correo Electrónico"
+                    type="email"
+                    placeholder="laura@ejemplo.com"
+                    required
+                    value={clientEmail}
+                    onChange={(e) => setClientEmail(e.target.value)}
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider">
+                    Detalles del evento o vestido (Opcional)
+                  </label>
+                  <textarea
+                    rows={3}
+                    placeholder="Cuéntanos si tienes alguna referencia de peinado, color de vestido o solicitud especial..."
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                    className="w-full rounded-xl border border-stone-200 bg-stone-50/50 p-3 text-sm text-stone-900 focus:border-rose-400 focus:bg-white focus:outline-none"
+                  />
+                </div>
+
+                <div className="flex items-center justify-between pt-4 border-t border-rose-50">
+                  <Button type="button" variant="outline" onClick={() => setStep(2)} className="gap-2">
+                    <ChevronLeft className="h-4 w-4" />
+                    <span>Atrás</span>
+                  </Button>
+
+                  <Button
+                    type="submit"
+                    size="lg"
+                    disabled={loading}
+                    className="gap-2 px-8 bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 font-bold shadow-md shadow-rose-200"
+                  >
+                    {loading ? "Registrando Cita..." : "Confirmar y Solicitar Cita"}
+                    <CheckCircle2 className="h-4 w-4" />
+                  </Button>
+                </div>
+              </form>
+            </div>
+          )}
+        </div>
+      );
 }
 
