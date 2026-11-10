@@ -18,3 +18,4 @@ export class DeleteAppointmentUseCase {
     return { success: true };
   }
 }
+
