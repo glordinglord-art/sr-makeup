@@ -1,0 +1,35 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "sr-makeup-bk": {
+      "root": "sr-makeup-bk",
+      "framework": "nestjs"
+    },
+    "sr-makeup-ft": {
+      "root": "sr-makeup-ft",
+      "framework": "nextjs",
+      "bindings": [
+        {
+          "type": "service",
+          "service": "sr-makeup-bk",
+          "format": "url",
+          "env": "BACKEND_URL"
+        }
+      ]
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": {
+        "service": "sr-makeup-bk"
+      }
+    },
+    {
+      "source": "/(.*)",
+      "destination": {
+        "service": "sr-makeup-ft"
+      }
+    }
+  ]
+}

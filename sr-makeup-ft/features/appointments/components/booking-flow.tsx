@@ -24,6 +24,7 @@ import { Badge } from "@/shared/components/ui/badge";
 import { BrandLogo } from "@/shared/components/ui/brand-logo";
 import { BUSINESS_CONFIG } from "@/shared/constants/business";
 import { formatCurrency } from "@/shared/lib/utils";
+import { apiClient } from "@/shared/lib/api-client";
 import { appointmentsStore, ExtendedAppointment } from "@/shared/lib/appointments-store";
 
 interface BookingFlowProps {
@@ -186,10 +187,9 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
         status: "PENDING",
       });
 
-      // Llamada opcional en background al backend
-      fetch("http://localhost:3001/api/appointments", {
+      // Llamada opcional al backend
+      apiClient("/appointments", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           clientName,
           clientPhone,
