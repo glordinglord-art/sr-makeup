@@ -156,11 +156,20 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
   const selectedService =
     SERVICES_CATALOG.find((s) => s.id === selectedServiceId) || SERVICES_CATALOG[0];
 
+  const occupiedTimes = appointmentsStore
+    .getAll()
+    .filter((a) => a.date === selectedDate && a.status !== "CANCELLED")
+    .map((a) => a.time);
+
   const handleNextStep = () => {
     if (step === 1) setStep(2);
     else if (step === 2) {
       if (!selectedDate || !selectedTime) {
         alert("Por favor selecciona una fecha y horario para continuar.");
+        return;
+      }
+      if (occupiedTimes.includes(selectedTime)) {
+        alert("Ese horario ya se encuentra ocupado. Por favor selecciona otro.");
         return;
       }
       setStep(3);
@@ -172,10 +181,48 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
     setLoading(true);
 
     try {
+      // 1. Verificación de colisión de horarios
+      if (occupiedTimes.includes(selectedTime)) {
+        alert(`El horario de las ${selectedTime} ya no está disponible. Por favor selecciona otro.`);
+        setStep(2);
+        setLoading(false);
+        return;
+      }
+
+      // 2. Registro en base de datos Supabase a través del backend
+      try {
+        await apiClient("/appointments", {
+          method: "POST",
+          body: JSON.stringify({
+            clientName,
+            clientPhone,
+            clientEmail: clientEmail || "cliente@srmakeup.com",
+            serviceId: selectedService.id,
+            date: selectedDate,
+            time: selectedTime,
+            notes,
+          }),
+        });
+      } catch (err: any) {
+        if (
+          err?.message?.includes("disponible") ||
+          err?.message?.includes("ocupado") ||
+          err?.message?.includes("Slot") ||
+          err?.message?.includes("Conflict")
+        ) {
+          alert(`¡Ups! El horario de las ${selectedTime} acaba de ser reservado por otra persona en la base de datos. Por favor selecciona otro horario.`);
+          setStep(2);
+          setLoading(false);
+          return;
+        }
+        console.warn("Sincronización fallback:", err);
+      }
+
+      // 3. Guardar en memoria local
       const newApt = appointmentsStore.add({
         clientName,
         clientPhone,
-        clientEmail,
+        clientEmail: clientEmail || "cliente@srmakeup.com",
         serviceId: selectedService.id,
         serviceTitle: selectedService.title,
         date: selectedDate,
@@ -186,20 +233,6 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
         notes,
         status: "PENDING",
       });
-
-        // Llamada opcional al backend
-        apiClient("/appointments", {
-          method: "POST",
-          body: JSON.stringify({
-            clientName,
-            clientPhone,
-            clientEmail,
-            serviceId: selectedService.id,
-            date: selectedDate,
-            time: selectedTime,
-            notes,
-          }),
-      }).catch(() => null);
 
       setConfirmedAppointment(newApt);
       setStep(4);
@@ -572,18 +605,27 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
               <div className="grid grid-cols-2 gap-2.5 pt-2">
                 {AVAILABLE_TIMES.map((time) => {
                   const isSelected = selectedTime === time;
+                  const isOccupied = occupiedTimes.includes(time);
+
                   return (
                     <button
                       key={time}
                       type="button"
-                      onClick={() => setSelectedTime(time)}
-                      className={`p-3 rounded-xl border-2 text-xs font-semibold transition-all flex items-center justify-between ${isSelected
-                        ? "border-rose-500 bg-rose-500 text-white shadow-md shadow-rose-200"
-                        : "border-stone-200 hover:border-rose-300 text-stone-700 bg-white"
-                        }`}
+                      disabled={isOccupied}
+                      onClick={() => !isOccupied && setSelectedTime(time)}
+                      className={`p-3 rounded-xl border-2 text-xs font-semibold transition-all flex items-center justify-between ${
+                        isOccupied
+                          ? "border-stone-200 bg-stone-100/80 text-stone-400 cursor-not-allowed line-through opacity-70"
+                          : isSelected
+                          ? "border-rose-500 bg-rose-500 text-white shadow-md shadow-rose-200"
+                          : "border-stone-200 hover:border-rose-300 text-stone-700 bg-white"
+                      }`}
                     >
-                      <span>{time}</span>
-                      {isSelected && <Check className="h-3.5 w-3.5" />}
+                      <span className="flex items-center gap-1.5">
+                        <span>{time}</span>
+                        {isOccupied && <span className="text-[9px] not-italic text-stone-400 font-normal no-underline">(Ocupado)</span>}
+                      </span>
+                      {isSelected && !isOccupied && <Check className="h-3.5 w-3.5" />}
                     </button>
                   );
                 })}

@@ -40,3 +40,75 @@ body {
 .glow-rose {
   box-shadow: 0 0 50px -10px rgba(244, 114, 182, 0.25);
 }
+
+.glow-card {
+  box-shadow: 0 10px 30px -10px rgba(225, 29, 72, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+}
+
+/* Animación shimmer para Skeletons de lujo */
+@keyframes shimmerAnimation {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-shimmer::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.45) 40%,
+    rgba(255, 255, 255, 0.75) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmerAnimation 1.8s infinite ease-in-out;
+  content: "";
+}
+
+/* Flotación suave y animaciones de entrada */
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-float {
+  animation: floatGentle 4.5s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px -3px rgba(225, 29, 72, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 30px 2px rgba(225, 29, 72, 0.45);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+/* Transición suave para todos los botones interactivos */
+button, a {
+  transition-property: color, background-color, border-color, box-shadow, transform;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+

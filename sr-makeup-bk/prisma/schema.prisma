@@ -1,7 +1,8 @@
 // Prisma Schema para SR Makeup Studio
 datasource db {
-  provider = "postgresql" // Puedes cambiar a "sqlite" si quieres desarrollo local sin base de datos externa
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 generator client {

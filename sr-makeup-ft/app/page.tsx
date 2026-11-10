@@ -87,7 +87,7 @@ export default function HomePage() {
             {/* Columna Texto */}
             <div className="lg:col-span-7 text-center lg:text-left space-y-6">
               {/* Badge oficial */}
-              <div className="inline-flex items-center gap-2 rounded-full border border-rose-200/90 bg-rose-50/80 px-4 py-1.5 text-xs font-semibold text-rose-700 backdrop-blur-sm shadow-xs">
+              <div className="inline-flex items-center gap-2 rounded-full border border-rose-200/90 bg-rose-50/80 px-4 py-1.5 text-xs font-semibold text-rose-700 backdrop-blur-sm shadow-xs animate-float">
                 <Award className="h-3.5 w-3.5 text-rose-500" />
                 <span>Shirley Ram · Técnica Profesional con +5 Años de Experiencia</span>
               </div>
@@ -102,7 +102,7 @@ export default function HomePage() {
                 {BUSINESS_CONFIG.bioItems.map((item, idx) => (
                   <span
                     key={idx}
-                    className="inline-flex items-center text-xs font-medium text-stone-700 bg-white/90 border border-rose-100/80 px-3.5 py-1.5 rounded-full shadow-xs"
+                    className="inline-flex items-center text-xs font-medium text-stone-700 bg-white/90 border border-rose-100/80 px-3.5 py-1.5 rounded-full shadow-xs hover:border-rose-300 hover:shadow-sm transition-all"
                   >
                     {item}
                   </span>
@@ -116,7 +116,7 @@ export default function HomePage() {
               {/* Botones de Acción */}
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
                 <Link href="/agendar" className="w-full sm:w-auto">
-                  <Button size="lg" className="w-full sm:w-auto shadow-lg shadow-rose-300/40 bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 gap-2 font-semibold">
+                  <Button size="lg" className="w-full sm:w-auto shadow-lg shadow-rose-300/40 bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 gap-2 font-semibold animate-pulse-glow hover:scale-[1.02] active:scale-[0.98] transition-transform">
                     <Calendar className="h-4 w-4" />
                     <span>Agendar Cita Online</span>
                   </Button>
@@ -128,7 +128,7 @@ export default function HomePage() {
                   rel="noopener noreferrer"
                   className="w-full sm:w-auto"
                 >
-                  <Button variant="outline" size="lg" className="w-full sm:w-auto border-rose-200 hover:bg-rose-50/70 text-rose-800 font-semibold">
+                  <Button variant="outline" size="lg" className="w-full sm:w-auto border-rose-200 hover:bg-rose-50/70 text-rose-800 font-semibold hover:scale-[1.02] active:scale-[0.98] transition-transform">
                     Escribir al WhatsApp (+57 317 611 2095)
                   </Button>
                 </a>
@@ -177,7 +177,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Insignia Flotante con el logo idéntico a su perfil de Instagram */}
-                <div className="absolute -top-6 -left-6 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border border-rose-100 flex items-center gap-3">
+                <div className="absolute -top-6 -left-6 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border border-rose-100 flex items-center gap-3 animate-float">
                   <BrandLogo size="md" showText={false} />
                   <div>
                     <span className="font-serif text-sm font-bold text-stone-900 block leading-tight">
@@ -194,7 +194,7 @@ export default function HomePage() {
                   href={BUSINESS_CONFIG.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="absolute -bottom-5 -right-5 bg-stone-900 text-white p-3.5 rounded-2xl shadow-xl flex items-center gap-2.5 hover:bg-stone-800 transition-colors group cursor-pointer"
+                  className="absolute -bottom-5 -right-5 bg-stone-900 text-white p-3.5 rounded-2xl shadow-xl flex items-center gap-2.5 hover:bg-stone-800 hover:scale-105 active:scale-95 transition-all group cursor-pointer"
                 >
                   <div className="h-7 w-7 rounded-full bg-gradient-to-tr from-amber-400 via-rose-500 to-purple-600 flex items-center justify-center text-white">
                     <Camera className="h-3.5 w-3.5" />

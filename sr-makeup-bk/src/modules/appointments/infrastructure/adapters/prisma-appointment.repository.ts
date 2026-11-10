@@ -39,7 +39,7 @@ export class PrismaAppointmentRepository implements AppointmentRepositoryPort {
     time: string,
   ): Promise<AppointmentEntity | null> {
     const found = await this.prisma.appointment.findFirst({
-      where: { date, time },
+      where: { date, time, status: { not: 'CANCELLED' } },
     });
     return found ? AppointmentMapper.toDomain(found) : null;
   }
@@ -59,5 +59,12 @@ export class PrismaAppointmentRepository implements AppointmentRepositoryPort {
       data,
     });
     return AppointmentMapper.toDomain(updated);
+  }
+
+  async delete(id: string): Promise<boolean> {
+    await this.prisma.appointment.delete({
+      where: { id },
+    });
+    return true;
   }
 }

@@ -9,5 +9,6 @@ export interface AppointmentRepositoryPort {
   findByDateAndTime(date: string, time: string): Promise<AppointmentEntity | null>;
   findAll(status?: AppointmentStatus): Promise<AppointmentEntity[]>;
   update(appointment: AppointmentEntity): Promise<AppointmentEntity>;
+  delete(id: string): Promise<boolean>;
 }
 

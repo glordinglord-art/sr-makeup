@@ -6,11 +6,13 @@ import {
   Query,
   Param,
   Patch,
+  Delete,
 } from '@nestjs/common';
 import { CreateAppointmentUseCase } from '../../application/use-cases/create-appointment.use-case';
 import { GetAvailabilityUseCase } from '../../application/use-cases/get-availability.use-case';
 import { GetAppointmentsUseCase } from '../../application/use-cases/get-appointments.use-case';
 import { UpdateAppointmentStatusUseCase } from '../../application/use-cases/update-appointment-status.use-case';
+import { DeleteAppointmentUseCase } from '../../application/use-cases/delete-appointment.use-case';
 import { CreateAppointmentDto } from '../../application/dtos/create-appointment.dto';
 import type { AppointmentStatus } from '../../domain/entities/appointment.entity';
 
@@ -21,6 +23,7 @@ export class AppointmentController {
     private readonly getAvailabilityUseCase: GetAvailabilityUseCase,
     private readonly getAppointmentsUseCase: GetAppointmentsUseCase,
     private readonly updateAppointmentStatusUseCase: UpdateAppointmentStatusUseCase,
+    private readonly deleteAppointmentUseCase: DeleteAppointmentUseCase,
   ) {}
 
   @Post()
@@ -48,5 +51,10 @@ export class AppointmentController {
   ) {
     const updated = await this.updateAppointmentStatusUseCase.execute(id, status);
     return updated.toJSON();
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string) {
+    return this.deleteAppointmentUseCase.execute(id);
   }
 }
