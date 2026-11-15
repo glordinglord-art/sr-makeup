@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/shared/components/layout/navbar";
-import { Footer } from "@/shared/components/layout/footer";
-import { FloatingWhatsApp } from "@/shared/components/ui/floating-whatsapp";
+import { PublicChrome } from "@/shared/components/layout/public-chrome";
 import { BUSINESS_CONFIG } from "@/shared/constants/business";
 
 const geistSans = Geist({
@@ -32,10 +30,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#fdfafb] text-stone-800 selection:bg-rose-200">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <FloatingWhatsApp />
+        <PublicChrome>{children}</PublicChrome>
       </body>
     </html>
   );
