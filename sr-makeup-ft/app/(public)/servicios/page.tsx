@@ -4,7 +4,7 @@ import { BrandLogo } from "@/shared/components/ui/brand-logo";
 
 export const metadata = {
   title: "Servicios & Precios | Sr.Makeup · Shirley Ram",
-  description: "Catálogo completo de servicios de maquillaje profesional y artístico por Shirley Ram.",
+  description: "Catálogo completo de servicios de maquillaje profesional, artístico, cepillados, secados, ondas y peinados por Shirley Ram.",
 };
 
 const SERVICES_DATA: Service[] = [
@@ -89,6 +89,66 @@ const SERVICES_DATA: Service[] = [
     ],
     isActive: true,
   },
+  {
+    id: "cepillado-secado",
+    title: "Cepillado, Secado & Planchado",
+    slug: "cepillado-secado-planchado",
+    description: "Lavado, termo-protección y cepillado profesional con volumen, liso espejo o puntas moldeadas de larga duración.",
+    price: 70000,
+    durationMinutes: 60,
+    category: "cabello",
+    features: [
+      "Termo-protector profesional y sellador de puntas",
+      "Acabado liso sedoso, con volumen o movimiento natural",
+      "Control de frizz y brillo espejo duradero",
+    ],
+    isActive: true,
+  },
+  {
+    id: "ondas-peinados",
+    title: "Ondas Glam & Peinados Sociales",
+    slug: "ondas-peinados-sociales",
+    description: "Ondas de agua, ondas Hollywood, recogidos modernos, semi-recogidos o trenzas editoriales diseñadas para durar toda tu fiesta.",
+    price: 110000,
+    durationMinutes: 75,
+    category: "cabello",
+    features: [
+      "Diseño personalizado según tu escote, vestido y rostro",
+      "Fijación flexible sin efecto acartonado",
+      "Preparación previa con cepillado o textura",
+    ],
+    isActive: true,
+  },
+  {
+    id: "combo-glam-cabello",
+    title: "Combo Total: Maquillaje + Cabello",
+    slug: "combo-maquillaje-cabello",
+    description: "El paquete completo de imagen para eventos: Maquillaje Social con piel blindada 16h+ más cepillado, ondas o peinado social.",
+    price: 260000,
+    durationMinutes: 120,
+    category: "cabello",
+    features: [
+      "Maquillaje Social completo con pestañas incluidas",
+      "Cepillado, ondas glam o peinado social a elección",
+      "Armonía total entre tu look facial y estilismo capilar",
+    ],
+    isActive: true,
+  },
+  {
+    id: "tratamiento-capilar",
+    title: "Ritual de Hidratación & Brillo Capilar",
+    slug: "ritual-hidratacion-capilar",
+    description: "Terapia profunda de recuperación, nutrición intensiva, sellado de cutícula y cepillado final con brillo espejo.",
+    price: 130000,
+    durationMinutes: 90,
+    category: "cabello",
+    features: [
+      "Diagnóstico de fibra capilar y cuero cabelludo",
+      "Mascarilla nutritiva y ampolletas reconstructoras",
+      "Secado, cepillado y sellado térmico incluidos",
+    ],
+    isActive: true,
+  },
 ];
 
 export default function ServiciosPage() {
@@ -102,10 +162,10 @@ export default function ServiciosPage() {
           Catálogo & Tarifas
         </span>
         <h1 className="font-serif text-4xl sm:text-5xl font-bold text-stone-900">
-          Servicios de Maquillaje
+          Maquillaje & Estilismo Capilar
         </h1>
         <p className="text-stone-600 text-sm sm:text-base leading-relaxed">
-          Cada servicio incluye productos internacionales de alta gama (Charlotte Tilbury, Huda Beauty, Nars, Dior) y técnicas avanzadas de preparación de piel.
+          Cada servicio incluye productos internacionales de alta gama (Charlotte Tilbury, Huda Beauty, Nars, Dior), termo-protección capilar profesional y técnicas de larga duración.
         </p>
       </div>
 

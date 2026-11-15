@@ -5,7 +5,7 @@ export interface Service {
   description: string;
   price: number;
   durationMinutes: number;
-  category: "novias" | "social" | "quinceaneras" | "editorial" | "automaquillaje" | "artistico";
+  category: "novias" | "social" | "quinceaneras" | "editorial" | "automaquillaje" | "artistico" | "cabello";
   imageUrl?: string;
   features: string[]; // Por ejemplo: ["Pestañas postizas incluidas", "Prueba de maquillaje previa"]
   isActive: boolean;

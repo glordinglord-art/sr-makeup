@@ -543,21 +543,21 @@ export default function AdminDashboardPage() {
                   onChange={(e) => {
                     const sid = e.target.value;
                     setNewServiceId(sid);
-                    if (sid === "novias") {
-                      setNewServiceTitle("Maquillaje de Novias (Bridal Glam)");
-                      setNewPrice(320000);
-                    } else if (sid === "social") {
-                      setNewServiceTitle("Maquillaje Social & Fiesta");
-                      setNewPrice(180000);
-                    } else if (sid === "artistico") {
-                      setNewServiceTitle("Maquillaje Artístico & Editorial");
-                      setNewPrice(220000);
-                    } else if (sid === "quinceaneras") {
-                      setNewServiceTitle("Quinceañeras Soñadas");
-                      setNewPrice(240000);
-                    } else {
-                      setNewServiceTitle("Taller Personalizado de Automaquillaje");
-                      setNewPrice(200000);
+                    const serviceMap: Record<string, { title: string; price: number }> = {
+                      novias: { title: "Maquillaje de Novias (Bridal Glam)", price: 320000 },
+                      social: { title: "Maquillaje Social & Fiesta", price: 180000 },
+                      artistico: { title: "Maquillaje Artístico & Editorial", price: 220000 },
+                      quinceaneras: { title: "Quinceañeras Soñadas", price: 240000 },
+                      automaquillaje: { title: "Taller Personalizado de Automaquillaje", price: 200000 },
+                      "cepillado-secado": { title: "Cepillado, Secado & Planchado", price: 70000 },
+                      "ondas-peinados": { title: "Ondas Glam & Peinados Sociales", price: 110000 },
+                      "combo-glam-cabello": { title: "Combo Total: Maquillaje + Cabello", price: 260000 },
+                      "tratamiento-capilar": { title: "Ritual de Hidratación & Brillo Capilar", price: 130000 },
+                    };
+                    const picked = serviceMap[sid];
+                    if (picked) {
+                      setNewServiceTitle(picked.title);
+                      setNewPrice(picked.price);
                     }
                   }}
                   className="w-full rounded-xl border border-stone-200 bg-stone-50 p-2.5 text-xs text-stone-900 focus:outline-none focus:border-rose-400"
@@ -567,6 +567,10 @@ export default function AdminDashboardPage() {
                   <option value="artistico">Maquillaje Artístico & Editorial - $220.000</option>
                   <option value="quinceaneras">Quinceañeras Soñadas - $240.000</option>
                   <option value="automaquillaje">Taller de Automaquillaje - $200.000</option>
+                  <option value="cepillado-secado">Cabello: Cepillado, Secado & Planchado - $70.000</option>
+                  <option value="ondas-peinados">Cabello: Ondas Glam & Peinados Sociales - $110.000</option>
+                  <option value="combo-glam-cabello">Combo Total: Maquillaje + Cabello - $260.000</option>
+                  <option value="tratamiento-capilar">Cabello: Ritual de Hidratación & Brillo - $130.000</option>
                 </select>
               </div>
 

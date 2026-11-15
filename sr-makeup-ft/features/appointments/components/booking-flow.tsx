@@ -115,6 +115,62 @@ const SERVICES_CATALOG: ServiceOption[] = [
       "Guía digital en PDF de productos recomendados",
     ],
   },
+  {
+    id: "cepillado-secado",
+    title: "Cepillado, Secado & Planchado",
+    subtitle: "Cabello sedoso, con volumen o liso espejo con termo-protección profesional.",
+    price: 70000,
+    durationMinutes: 60,
+    category: "cabello",
+    badge: "Cabello",
+    features: [
+      "Termo-protector profesional y sellador de puntas",
+      "Acabado liso sedoso, con volumen o moldeado",
+      "Control de frizz de larga duración",
+    ],
+  },
+  {
+    id: "ondas-peinados",
+    title: "Ondas Glam & Peinados Sociales",
+    subtitle: "Ondas Hollywood, recogidos modernos o trenzas para toda tu celebración.",
+    price: 110000,
+    durationMinutes: 75,
+    category: "cabello",
+    badge: "Estilismo",
+    features: [
+      "Diseño personalizado según tu vestido y rostro",
+      "Fijación flexible sin efecto acartonado",
+      "Preparación previa con cepillado o textura",
+    ],
+  },
+  {
+    id: "combo-glam-cabello",
+    title: "Combo Total: Maquillaje + Cabello",
+    subtitle: "Look completo: Maquillaje Social 16h+ más cepillado, ondas o peinado.",
+    price: 260000,
+    durationMinutes: 120,
+    category: "cabello",
+    badge: "Combo VIP",
+    features: [
+      "Maquillaje Social completo con pestañas incluidas",
+      "Cepillado, ondas glam o peinado social a elección",
+      "Armonía total entre tu maquillaje y cabello",
+    ],
+  },
+  {
+    id: "tratamiento-capilar",
+    title: "Ritual de Hidratación & Brillo Capilar",
+    subtitle: "Nutrición profunda, sellado de cutícula y cepillado final con brillo espejo.",
+    price: 130000,
+    durationMinutes: 90,
+    category: "cabello",
+    badge: "Cuidado Capilar",
+    features: [
+      "Diagnóstico de fibra capilar y cuero cabelludo",
+      "Mascarilla nutritiva y ampolletas reconstructoras",
+      "Secado, cepillado y sellado térmico incluidos",
+    ],
+  },
 ];
 
 const AVAILABLE_TIMES = [
@@ -434,7 +490,7 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
           <div className="text-center max-w-xl mx-auto space-y-2">
             <span className="text-xs font-semibold text-rose-500 uppercase tracking-widest">Paso 1 de 3</span>
             <h2 className="font-serif text-3xl font-bold text-stone-900">
-              ¿Qué tipo de maquillaje deseas?
+              ¿Qué servicio de maquillaje o cabello deseas?
             </h2>
             <p className="text-stone-500 text-xs sm:text-sm">
               Selecciona el servicio que mejor se adapte a tu evento especial.

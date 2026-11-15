@@ -55,17 +55,17 @@ const FEATURED_SERVICES: Service[] = [
     isActive: true,
   },
   {
-    id: "artistico",
-    title: "Maquillaje Artístico & Editorial",
-    slug: "maquillaje-artistico",
-    description: "Creaciones de fantasía, pasarela, sesiones de fotos y conceptos creativos llenos de color, pedrería y detalle.",
-    price: 220000,
-    durationMinutes: 90,
-    category: "artistico",
+    id: "combo-glam-cabello",
+    title: "Combo Total: Maquillaje + Cabello",
+    slug: "combo-maquillaje-cabello",
+    description: "Experiencia integral para tu evento: Maquillaje Social con piel blindada 16h+ más cepillado, secado, ondas glam o peinado social.",
+    price: 260000,
+    durationMinutes: 120,
+    category: "cabello",
     features: [
-      "Técnicas avanzadas de color y grafismo",
-      "Aplicación de pedrería, perlas o glitter fino",
-      "Alta definición para cámaras y luces profesionales",
+      "Maquillaje Social completo con pestañas incluidas",
+      "Cepillado, secado, ondas o peinado a elección",
+      "Termo-protección y fijación de larga duración",
     ],
     isActive: true,
   },
@@ -129,7 +129,7 @@ export default function HomePage() {
                 </div>
 
                   <p className="text-stone-600 text-sm sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0">
-                    Especialista en novias, eventos sociales, quinceañeras y producciones artísticas en Medellín. Más de 5 años diseñando la piel perfecta con cosmética de alta gama y técnicas de piel blindada.
+                    Especialista en maquillaje profesional y estilismo capilar (cepillados, secados, ondas y peinados) en Medellín. Más de 5 años diseñando looks completos con cosmética de alta gama y piel blindada.
                   </p>
 
                   {/* Botones de Acción */}
@@ -292,10 +292,10 @@ export default function HomePage() {
                     <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" /> Maquillaje Social & Gala
                   </span>
                   <span className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" /> Editorial & Fantasía Artística
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" /> Cepillados, Secados & Ondas Glam
                   </span>
                   <span className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" /> Clases de Automaquillaje VIP
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" /> Hidratación & Estilismo Capilar
                   </span>
                 </div>
 

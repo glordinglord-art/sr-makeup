@@ -1,10 +1,10 @@
 export const BUSINESS_CONFIG = {
   name: "Sr.Makeup",
   artistName: "Shirley Ram",
-  title: "Técnica Profesional en Maquillaje & Artista Visual",
+  title: "Técnica Profesional en Maquillaje & Estilismo Capilar",
   tagline: "Resalta tu belleza con estilo y elegancia",
   yearsOfExperience: "5+ años de experiencia",
-  experienceSummary: "Más de 5 años transformando rostros para novias, galas, eventos sociales y producciones de moda.",
+  experienceSummary: "Más de 5 años transformando rostros y cabellos para novias, galas, eventos sociales y producciones de moda.",
   stats: [
     { label: "Años de Trayectoria", value: "5+" },
     { label: "Clientas Felices", value: "800+" },
@@ -33,6 +33,7 @@ export const BUSINESS_CONFIG = {
     { id: "novias", label: "Novias & Bodas (Bridal)" },
     { id: "artistico", label: "Artístico & Editorial" },
     { id: "quinceaneras", label: "Quinceañeras & Grados" },
+    { id: "cabello", label: "Cabello: Cepillados, Secados & Peinados" },
     { id: "automaquillaje", label: "Clases de Automaquillaje" },
   ],
 };
