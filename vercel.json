@@ -4,7 +4,7 @@
     "sr-makeup-bk": {
       "root": "sr-makeup-bk",
       "framework": "nestjs",
-      "entrypoint": "dist/main.js"
+      "entrypoint": "vercel-entry.cjs"
     },
     "sr-makeup-ft": {
       "root": "sr-makeup-ft",
