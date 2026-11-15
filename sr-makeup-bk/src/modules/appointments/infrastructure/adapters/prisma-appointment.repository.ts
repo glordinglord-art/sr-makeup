@@ -15,6 +15,7 @@ export class PrismaAppointmentRepository implements AppointmentRepositoryPort {
     const data = AppointmentMapper.toPersistence(appointment);
     const created = await this.prisma.appointment.create({
       data,
+      include: { service: true },
     });
     return AppointmentMapper.toDomain(created);
   }
@@ -47,6 +48,7 @@ export class PrismaAppointmentRepository implements AppointmentRepositoryPort {
   async findAll(status?: AppointmentStatus): Promise<AppointmentEntity[]> {
     const list = await this.prisma.appointment.findMany({
       where: status ? { status } : undefined,
+      include: { service: true },
       orderBy: [{ date: 'asc' }, { time: 'asc' }],
     });
     return list.map(AppointmentMapper.toDomain);
@@ -57,6 +59,7 @@ export class PrismaAppointmentRepository implements AppointmentRepositoryPort {
     const updated = await this.prisma.appointment.update({
       where: { id: appointment.id },
       data,
+      include: { service: true },
     });
     return AppointmentMapper.toDomain(updated);
   }

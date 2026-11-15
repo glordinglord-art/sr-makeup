@@ -4,12 +4,20 @@ export type AppointmentStatus =
   | 'COMPLETED'
   | 'CANCELLED';
 
+export interface AppointmentServiceSummary {
+  title: string;
+  price: number;
+  durationMinutes: number;
+  category: string;
+}
+
 export interface AppointmentProps {
   id: string;
   clientName: string;
   clientEmail: string;
   clientPhone: string;
   serviceId: string;
+  service?: AppointmentServiceSummary | null;
   date: string; // YYYY-MM-DD
   time: string; // HH:mm
   notes?: string | null;

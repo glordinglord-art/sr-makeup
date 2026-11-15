@@ -202,6 +202,7 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
 
   const [loading, setLoading] = useState(false);
   const [confirmedAppointment, setConfirmedAppointment] = useState<ExtendedAppointment | null>(null);
+  const [serverOccupiedTimes, setServerOccupiedTimes] = useState<string[]>([]);
 
   useEffect(() => {
     // Inicializar fecha para el día siguiente como mínimo
@@ -210,13 +211,36 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
     setSelectedDate(tomorrow.toISOString().split("T")[0]);
   }, []);
 
+  useEffect(() => {
+    if (!selectedDate) return;
+    let active = true;
+    apiClient<{ time: string; available: boolean }[]>(
+      `/appointments/availability?date=${selectedDate}`
+    )
+      .then((slots) => {
+        if (!active || !Array.isArray(slots)) return;
+        const taken = slots.filter((s) => !s.available).map((s) => s.time);
+        setServerOccupiedTimes(taken);
+      })
+      .catch(() => {
+        if (active) setServerOccupiedTimes([]);
+      });
+    return () => {
+      active = false;
+    };
+  }, [selectedDate]);
+
   const selectedService =
     SERVICES_CATALOG.find((s) => s.id === selectedServiceId) || SERVICES_CATALOG[0];
 
-  const occupiedTimes = appointmentsStore
+  const localOccupiedTimes = appointmentsStore
     .getAll()
     .filter((a) => a.date === selectedDate && a.status !== "CANCELLED")
     .map((a) => a.time);
+
+  const occupiedTimes = Array.from(
+    new Set([...serverOccupiedTimes, ...localOccupiedTimes])
+  );
 
   const handleNextStep = () => {
     if (step === 1) setStep(2);

@@ -83,11 +83,19 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-6xl px-6 mt-12 pt-8 border-t border-rose-100/60 flex flex-col sm:flex-row items-center justify-between text-xs text-stone-400">
+      <div className="mx-auto max-w-6xl px-6 mt-12 pt-8 border-t border-rose-100/60 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-stone-400">
         <p>© 2026 {BUSINESS_CONFIG.name} · Shirley Ram. Todos los derechos reservados.</p>
-        <p className="flex items-center gap-1 mt-2 sm:mt-0 text-stone-500">
-          Hecho con <Heart className="h-3 w-3 text-rose-500 fill-rose-500" /> para realzar tu belleza
-        </p>
+        <div className="flex items-center gap-4">
+          <Link
+            href="/admin"
+            className="text-stone-400 hover:text-rose-600 transition-colors underline underline-offset-4"
+          >
+            Portal Shirley (Admin)
+          </Link>
+          <p className="flex items-center gap-1 text-stone-500">
+            Hecho con <Heart className="h-3 w-3 text-rose-500 fill-rose-500" /> para realzar tu belleza
+          </p>
+        </div>
       </div>
     </footer>
   );
