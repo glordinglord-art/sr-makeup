@@ -3,7 +3,8 @@
   "services": {
     "sr-makeup-bk": {
       "root": "sr-makeup-bk",
-      "framework": "nestjs"
+      "framework": "nestjs",
+      "entrypoint": "dist/main.js"
     },
     "sr-makeup-ft": {
       "root": "sr-makeup-ft",

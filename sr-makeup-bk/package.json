@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "postinstall": "prisma generate",
-    "build": "prisma generate && nest build",
+    "build": "prisma generate && nest build && esbuild dist/main.js --bundle --platform=node --format=cjs --allow-overwrite --outfile=dist/main.js --external:@nestjs/microservices --external:@nestjs/microservices/* --external:@nestjs/websockets --external:@nestjs/websockets/* --external:class-transformer/storage --external:cache-manager && node -e \"const fs=require('fs'),p=require('path'),s='node_modules/.prisma/client';for(const f of fs.readdirSync(s)){if(f.includes('query_engine')||f==='schema.prisma')fs.copyFileSync(p.join(s,f),p.join('dist',f));}\"",
     "deploy": "nest deploy",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start --env-file .env",
@@ -42,6 +42,7 @@
     "@types/jest": "^30.0.0",
     "@types/node": "^24.0.0",
     "@types/supertest": "^7.0.0",
+    "esbuild": "^0.28.2",
     "jest": "^30.0.0",
     "oxlint": "^1.58.0",
     "oxlint-tsgolint": "^7.0.2001",
