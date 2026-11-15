@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Calendar as CalendarIcon,
   Clock,
@@ -508,6 +509,14 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
         </div>
       </div>
 
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={step}
+          initial={{ opacity: 0, x: 24 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -24 }}
+          transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+        >
       {/* PASO 1: SELECCIONAR SERVICIO */}
       {step === 1 && (
         <div className="space-y-6">
@@ -816,7 +825,9 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
               </form>
             </div>
           )}
-        </div>
-      );
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
 }
 

@@ -19,6 +19,7 @@ import { PortfolioGrid, BeforeAfterSlider } from "@/features/portfolio";
 import { ServiceCard } from "@/features/services";
 import { TestimonialsSection } from "@/features/reviews";
 import { FaqAccordion } from "@/shared/components/ui/faq-accordion";
+import { Reveal, StaggerContainer, StaggerItem } from "@/shared/components/ui/motion-primitives";
 import { BUSINESS_CONFIG } from "@/shared/constants/business";
 import { Service } from "@/features/services/types/service.types";
 
@@ -85,7 +86,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Columna Texto */}
-            <div className="lg:col-span-7 text-center lg:text-left space-y-6">
+            <Reveal direction="left" immediate className="lg:col-span-7 text-center lg:text-left space-y-6">
               {/* Badge oficial */}
               <div className="inline-flex items-center gap-2 rounded-full border border-rose-200/90 bg-rose-50/80 px-4 py-1.5 text-xs font-semibold text-rose-700 backdrop-blur-sm shadow-xs animate-float">
                 <Award className="h-3.5 w-3.5 text-rose-500" />
@@ -168,10 +169,10 @@ export default function HomePage() {
                         <span>Atención VIP</span>
                       </div>
                     </div>
-                  </div>
+                  </Reveal>
 
                   {/* Columna Imagen / Badge de Marca */}
-                  <div className="lg:col-span-5 flex justify-center">
+                  <Reveal direction="right" immediate delay={0.12} className="lg:col-span-5 flex justify-center">
                     <div className="relative w-full max-w-md">
                       {/* Marco con foto editorial */}
                       <div className="relative aspect-4/5 rounded-3xl overflow-hidden shadow-2xl shadow-rose-900/10 border-4 border-white">
@@ -226,31 +227,31 @@ export default function HomePage() {
                         </div>
                       </a>
                     </div>
-                  </div>
+                  </Reveal>
               </div>
             </div>
           </section>
 
           {/* 2. STATS BANNER (+5 AÑOS DE EXPERIENCIA) */}
           <section className="px-6 max-w-6xl mx-auto w-full">
-            <div className="rounded-3xl bg-white border border-rose-100/80 p-8 shadow-sm grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+            <StaggerContainer className="rounded-3xl bg-white border border-rose-100/80 p-8 shadow-sm grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
               {BUSINESS_CONFIG.stats.map((stat, idx) => (
-                <div key={idx} className="space-y-1">
+                <StaggerItem key={idx} className="space-y-1">
                   <span className="font-serif text-3xl sm:text-4xl font-bold text-rose-600 block">
                     {stat.value}
                   </span>
                   <span className="text-xs sm:text-sm font-medium text-stone-600">
                     {stat.label}
                   </span>
-                </div>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </section>
 
           {/* 3. SECCIÓN SOBRE SHIRLEY RAM */}
           <section id="sobre-mi" className="px-6 max-w-6xl mx-auto w-full">
             <div className="rounded-3xl bg-gradient-to-br from-[#fff7f8] via-[#fdf2f4] to-[#faebee] border border-rose-100/90 p-8 sm:p-14 grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
-              <div className="md:col-span-5 flex justify-center">
+              <Reveal direction="left" className="md:col-span-5 flex justify-center">
                 <div className="relative">
                   <div className="w-60 h-60 sm:w-72 sm:h-72 rounded-3xl overflow-hidden border-4 border-white shadow-2xl">
                     <img
@@ -264,9 +265,9 @@ export default function HomePage() {
                     <span>5 Años de Experiencia</span>
                   </div>
                 </div>
-              </div>
+              </Reveal>
 
-              <div className="md:col-span-7 space-y-4 text-center md:text-left">
+              <Reveal direction="right" delay={0.1} className="md:col-span-7 space-y-4 text-center md:text-left">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-semibold">
                   <Sparkles className="h-3.5 w-3.5" />
                   <span>Conoce a tu Maquilladora</span>
@@ -311,116 +312,129 @@ export default function HomePage() {
                     </Button>
                   </a>
                 </div>
-              </div>
+              </Reveal>
             </div>
           </section>
 
           {/* 4. SECCIÓN SLIDER INTERACTIVO ANTES Y DESPUÉS */}
           <section className="px-6 max-w-6xl mx-auto w-full">
-            <div className="text-center max-w-xl mx-auto mb-10">
-              <span className="text-xs font-semibold text-rose-500 uppercase tracking-widest">
-                Transformaciones Reales
-              </span>
-              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-stone-900 mt-1 mb-2">
-                El Poder de la Piel Blindada
-              </h2>
-              <p className="text-stone-500 text-xs sm:text-sm">
-                Compara la naturalidad, unificación de tono y luminosidad lograda con técnicas profesionales.
-              </p>
-            </div>
+            <Reveal direction="up">
+              <div className="text-center max-w-xl mx-auto mb-10">
+                <span className="text-xs font-semibold text-rose-500 uppercase tracking-widest">
+                  Transformaciones Reales
+                </span>
+                <h2 className="font-serif text-3xl sm:text-4xl font-bold text-stone-900 mt-1 mb-2">
+                  El Poder de la Piel Blindada
+                </h2>
+                <p className="text-stone-500 text-xs sm:text-sm">
+                  Compara la naturalidad, unificación de tono y luminosidad lograda con técnicas profesionales.
+                </p>
+              </div>
 
-            <BeforeAfterSlider />
+              <BeforeAfterSlider />
+            </Reveal>
           </section>
 
           {/* 5. SECCIÓN DE SERVICIOS Y TARIFAS */}
           <section className="px-6 max-w-6xl mx-auto w-full">
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12">
-              <div>
-                <span className="text-xs font-semibold text-rose-500 uppercase tracking-widest">
-                  Experiencias & Precios
-                </span>
-                <h2 className="font-serif text-3xl sm:text-4xl font-bold text-stone-900 mt-1">
-                  Servicios Destacados
-                </h2>
+            <Reveal direction="up">
+              <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12">
+                <div>
+                  <span className="text-xs font-semibold text-rose-500 uppercase tracking-widest">
+                    Experiencias & Precios
+                  </span>
+                  <h2 className="font-serif text-3xl sm:text-4xl font-bold text-stone-900 mt-1">
+                    Servicios Destacados
+                  </h2>
+                </div>
+                <Link
+                  href="/servicios"
+                  className="group inline-flex items-center gap-1.5 text-sm font-semibold text-rose-600 hover:text-rose-700 mt-3 sm:mt-0"
+                >
+                  Ver todos los servicios y tarifas
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
               </div>
-              <Link
-                href="/servicios"
-                className="group inline-flex items-center gap-1.5 text-sm font-semibold text-rose-600 hover:text-rose-700 mt-3 sm:mt-0"
-              >
-                Ver todos los servicios y tarifas
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </div>
+            </Reveal>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {FEATURED_SERVICES.map((service) => (
-                <ServiceCard key={service.id} service={service} />
+                <StaggerItem key={service.id}>
+                  <ServiceCard service={service} />
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </section>
 
           {/* 6. SECCIÓN DE PORTAFOLIO */}
           <section className="px-6 max-w-6xl mx-auto w-full">
-            <div className="text-center max-w-xl mx-auto mb-12">
-              <span className="text-xs font-semibold text-rose-500 uppercase tracking-widest">
-                Galería de Arte
-              </span>
-              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-stone-900 mt-1 mb-3">
-                Creaciones Recientes
-              </h2>
-              <p className="text-stone-500 text-sm">
-                Explora algunos de nuestros looks de novias, social, quinceañeras y artístico.
-              </p>
-            </div>
+            <Reveal direction="up">
+              <div className="text-center max-w-xl mx-auto mb-12">
+                <span className="text-xs font-semibold text-rose-500 uppercase tracking-widest">
+                  Galería de Arte
+                </span>
+                <h2 className="font-serif text-3xl sm:text-4xl font-bold text-stone-900 mt-1 mb-3">
+                  Creaciones Recientes
+                </h2>
+                <p className="text-stone-500 text-sm">
+                  Explora algunos de nuestros looks de novias, social, quinceañeras y artístico.
+                </p>
+              </div>
 
-            <PortfolioGrid />
+              <PortfolioGrid />
 
-            <div className="text-center mt-12">
-              <Link href="/portafolio">
-                <Button variant="outline" size="lg" className="border-rose-200 hover:bg-rose-50 text-rose-700 font-semibold">
-                  Explorar Portafolio Completo
-                </Button>
-              </Link>
-            </div>
+              <div className="text-center mt-12">
+                <Link href="/portafolio">
+                  <Button variant="outline" size="lg" className="border-rose-200 hover:bg-rose-50 text-rose-700 font-semibold">
+                    Explorar Portafolio Completo
+                  </Button>
+                </Link>
+              </div>
+            </Reveal>
           </section>
 
           {/* 7. RESEÑAS Y TESTIMONIOS */}
           <section className="px-6 max-w-6xl mx-auto w-full">
-            <div className="text-center max-w-xl mx-auto mb-12">
-              <span className="text-xs font-semibold text-rose-500 uppercase tracking-widest">
-                Opiniones de Clientas
-              </span>
-              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-stone-900 mt-1 mb-2">
-                Experiencias Inolvidables
-              </h2>
-              <p className="text-stone-500 text-sm">
-                Lo que dicen novias, graduadas y clientas que han confiado su día especial en Shirley Ram.
-              </p>
-            </div>
+            <Reveal direction="up">
+              <div className="text-center max-w-xl mx-auto mb-12">
+                <span className="text-xs font-semibold text-rose-500 uppercase tracking-widest">
+                  Opiniones de Clientas
+                </span>
+                <h2 className="font-serif text-3xl sm:text-4xl font-bold text-stone-900 mt-1 mb-2">
+                  Experiencias Inolvidables
+                </h2>
+                <p className="text-stone-500 text-sm">
+                  Lo que dicen novias, graduadas y clientas que han confiado su día especial en Shirley Ram.
+                </p>
+              </div>
 
-            <TestimonialsSection />
+              <TestimonialsSection />
+            </Reveal>
           </section>
 
           {/* 8. PREGUNTAS FRECUENTES (FAQ) */}
           <section className="px-6 max-w-6xl mx-auto w-full">
-            <div className="text-center max-w-xl mx-auto mb-10">
-              <span className="text-xs font-semibold text-rose-500 uppercase tracking-widest">
-                Dudas Comunes
-              </span>
-              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-stone-900 mt-1 mb-2">
-                Preguntas Frecuentes
-              </h2>
-              <p className="text-stone-500 text-xs sm:text-sm">
-                Todo lo que necesitas saber antes de tu cita o evento especial.
-              </p>
-            </div>
+            <Reveal direction="up">
+              <div className="text-center max-w-xl mx-auto mb-10">
+                <span className="text-xs font-semibold text-rose-500 uppercase tracking-widest">
+                  Dudas Comunes
+                </span>
+                <h2 className="font-serif text-3xl sm:text-4xl font-bold text-stone-900 mt-1 mb-2">
+                  Preguntas Frecuentes
+                </h2>
+                <p className="text-stone-500 text-xs sm:text-sm">
+                  Todo lo que necesitas saber antes de tu cita o evento especial.
+                </p>
+              </div>
 
-            <FaqAccordion />
+              <FaqAccordion />
+            </Reveal>
           </section>
 
           {/* 9. BANNER FINAL DE AGENDAMIENTO */}
           <section className="px-6 max-w-6xl mx-auto w-full">
-            <div className="rounded-3xl bg-gradient-to-br from-rose-500 via-rose-600 to-rose-700 p-8 sm:p-14 text-white text-center shadow-xl shadow-rose-500/20 relative overflow-hidden">
+            <Reveal direction="up">
+              <div className="rounded-3xl bg-gradient-to-br from-rose-500 via-rose-600 to-rose-700 p-8 sm:p-14 text-white text-center shadow-xl shadow-rose-500/20 relative overflow-hidden">
               <div className="relative z-10 space-y-5">
                 <span className="text-xs uppercase tracking-widest font-semibold bg-white/20 px-3.5 py-1 rounded-full inline-block backdrop-blur-xs">
                   Agenda Abierta · Medellín & Alrededores
@@ -450,6 +464,7 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
+            </Reveal>
           </section>
         </div>
         );

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { PublicChrome } from "@/shared/components/layout/public-chrome";
+import { MotionProvider } from "@/shared/components/ui/motion-primitives";
 import { BUSINESS_CONFIG } from "@/shared/constants/business";
 
 const geistSans = Geist({
@@ -30,7 +31,9 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#fdfafb] text-stone-800 selection:bg-rose-200">
-        <PublicChrome>{children}</PublicChrome>
+        <MotionProvider>
+          <PublicChrome>{children}</PublicChrome>
+        </MotionProvider>
       </body>
     </html>
   );

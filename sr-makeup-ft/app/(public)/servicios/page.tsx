@@ -1,6 +1,7 @@
 import { ServiceCard } from "@/features/services";
 import { Service } from "@/features/services/types/service.types";
 import { BrandLogo } from "@/shared/components/ui/brand-logo";
+import { Reveal, StaggerContainer, StaggerItem } from "@/shared/components/ui/motion-primitives";
 
 export const metadata = {
   title: "Servicios & Precios | Sr.Makeup · Shirley Ram",
@@ -153,8 +154,8 @@ const SERVICES_DATA: Service[] = [
 
 export default function ServiciosPage() {
   return (
-    <div className="py-16 px-6 max-w-6xl mx-auto space-y-16">
-      <div className="text-center max-w-2xl mx-auto space-y-3">
+    <div className="py-16 px-6 max-w-6xl mx-auto space-y-16 overflow-hidden">
+      <Reveal direction="up" immediate className="text-center max-w-2xl mx-auto space-y-3">
         <div className="flex justify-center mb-3">
           <BrandLogo size="md" showText={false} />
         </div>
@@ -167,13 +168,15 @@ export default function ServiciosPage() {
         <p className="text-stone-600 text-sm sm:text-base leading-relaxed">
           Cada servicio incluye productos internacionales de alta gama (Charlotte Tilbury, Huda Beauty, Nars, Dior), termo-protección capilar profesional y técnicas de larga duración.
         </p>
-      </div>
+      </Reveal>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {SERVICES_DATA.map((service) => (
-          <ServiceCard key={service.id} service={service} />
+          <StaggerItem key={service.id}>
+            <ServiceCard service={service} />
+          </StaggerItem>
         ))}
-      </div>
+      </StaggerContainer>
     </div>
   );
 }
