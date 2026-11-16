@@ -381,7 +381,7 @@ export default function HomePage() {
                 </p>
               </div>
 
-              <PortfolioGrid />
+              <PortfolioGrid featuredOnly maxItems={6} showFilters={false} />
 
               <div className="text-center mt-12">
                 <Link href="/portafolio">
