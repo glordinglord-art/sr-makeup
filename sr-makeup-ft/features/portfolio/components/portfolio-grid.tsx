@@ -246,10 +246,8 @@ export function PortfolioGrid({
                 setActiveIndex(idx);
                 setZoomed(false);
               }}
-              className={`group text-left relative overflow-hidden rounded-3xl shadow-sm border border-rose-100/80 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-rose-950/10 cursor-pointer flex flex-col ${
-                isHairWork
-                  ? "bg-gradient-to-b from-[#fdf6f8] via-[#faf0f3] to-[#f5e3e9]"
-                  : "bg-stone-100"
+              className={`group text-left relative overflow-hidden rounded-3xl shadow-sm border border-rose-100/70 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-rose-950/10 cursor-pointer flex flex-col ${
+                isHairWork ? "bg-white" : "bg-stone-100"
               }`}
             >
               <div className="aspect-4/5 w-full relative overflow-hidden">
@@ -258,15 +256,19 @@ export function PortfolioGrid({
                   alt={item.title}
                   className={`h-full w-full transition-transform duration-700 ${
                     isHairWork
-                      ? "object-contain p-4 pb-24 mix-blend-multiply group-hover:scale-105"
+                      ? "object-contain p-3 pb-24 group-hover:scale-104"
                       : "object-cover group-hover:scale-108"
                   }`}
                   loading="lazy"
                 />
 
-                {!isHairWork && (
-                  <div className="absolute inset-0 bg-gradient-to-t from-stone-950/85 via-stone-950/20 to-transparent opacity-75 group-hover:opacity-90 transition-opacity" />
-                )}
+                <div
+                  className={`absolute inset-0 transition-opacity ${
+                    isHairWork
+                      ? "bg-gradient-to-t from-stone-950/90 via-stone-950/25 to-transparent opacity-90"
+                      : "bg-gradient-to-t from-stone-950/85 via-stone-950/20 to-transparent opacity-75 group-hover:opacity-90"
+                  }`}
+                />
 
                 <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
                   <Badge
@@ -281,35 +283,19 @@ export function PortfolioGrid({
                   </span>
                 </div>
 
-                {isHairWork ? (
-                  <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-white/95 via-white/90 to-white/0 pt-8 pb-5 px-5 text-stone-900 space-y-1">
-                    <span className="text-[10px] uppercase font-bold tracking-widest text-rose-500 block">
-                      Shirley Ram · Sr.Makeup
-                    </span>
-                    <h4 className="font-serif text-lg sm:text-xl font-bold leading-snug">
-                      {item.title}
-                    </h4>
-                    {item.description && (
-                      <p className="text-xs text-stone-600 line-clamp-2 pt-0.5">
-                        {item.description}
-                      </p>
-                    )}
-                  </div>
-                ) : (
-                  <div className="absolute bottom-5 left-5 right-5 text-white space-y-1">
-                    <span className="text-[10px] uppercase font-bold tracking-widest text-rose-300 block">
-                      Shirley Ram · Sr.Makeup
-                    </span>
-                    <h4 className="font-serif text-xl font-bold leading-snug drop-shadow-sm">
-                      {item.title}
-                    </h4>
-                    {item.description && (
-                      <p className="text-xs text-stone-200 line-clamp-2 pt-1 font-light">
-                        {item.description}
-                      </p>
-                    )}
-                  </div>
-                )}
+                <div className="absolute bottom-5 left-5 right-5 text-white space-y-1">
+                  <span className="text-[10px] uppercase font-bold tracking-widest text-rose-300 block">
+                    Shirley Ram · Sr.Makeup
+                  </span>
+                  <h4 className="font-serif text-xl font-bold leading-snug drop-shadow-sm">
+                    {item.title}
+                  </h4>
+                  {item.description && (
+                    <p className="text-xs text-stone-200 line-clamp-2 pt-1 font-light">
+                      {item.description}
+                    </p>
+                  )}
+                </div>
               </div>
             </button>
           );
