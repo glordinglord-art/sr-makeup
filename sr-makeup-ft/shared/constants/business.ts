@@ -21,7 +21,7 @@ export const BUSINESS_CONFIG = {
   instagramUrl: "https://www.instagram.com/sr.makeup_/",
   whatsappNumber: "573176112095", // Número oficial de Shirley Ram
   phone: "+57 317 611 2095",
-  location: "Medellín, Colombia",
+  location: "Atención en Estudio Privado & Domicilio VIP",
   serviceType: "Atención en estudio privado y servicio VIP a domicilio",
   schedule: {
     weekdays: "8:00 AM - 6:00 PM",

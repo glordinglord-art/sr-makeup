@@ -174,7 +174,7 @@ export default function ContactoPage() {
               ¿Dónde atiende Shirley Ram?
             </h2>
             <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
-              Brindamos atención en nuestro <strong>estudio privado</strong> con iluminación profesional, y también ofrecemos <strong>servicio VIP a domicilio</strong> en Medellín, Envigado, El Poblado, Rionegro, Llanogrande y todo el Oriente Antioqueño para bodas y grupos.
+              Brindamos atención en nuestro <strong>estudio privado</strong> con iluminación profesional, y también ofrecemos <strong>servicio VIP a domicilio</strong> en tu hogar, hotel o lugar del evento para bodas, quinceañeras y grupos.
             </p>
 
             <div className="space-y-2 pt-2 text-xs text-stone-700">

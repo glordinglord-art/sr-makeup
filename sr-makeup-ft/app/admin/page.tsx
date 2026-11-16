@@ -78,6 +78,8 @@ export default function AdminDashboardPage() {
         const mappedServer: ExtendedAppointment[] = serverAppointments.map((item) => {
           const fallbackService = SERVICE_CATALOG_MAP[item.serviceId];
           const hasDomicilio = item.notes?.toLowerCase().includes("domicilio");
+          const dirMatch = item.notes?.match(/Dirección:\s*([^\n]+)/i);
+          const extractedAddress = dirMatch?.[1]?.trim();
           return {
             id: item.id,
             clientName: item.clientName,
@@ -89,7 +91,7 @@ export default function AdminDashboardPage() {
             time: item.time,
             notes: item.notes,
             locationType: hasDomicilio ? "domicilio" : "estudio",
-            address: hasDomicilio ? "A domicilio" : "Estudio Privado",
+            address: hasDomicilio ? (extractedAddress || "A domicilio") : "Estudio Privado",
             price: item.service?.price ?? fallbackService?.price ?? 0,
             status: item.status,
             createdAt: item.createdAt,

@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: `${BUSINESS_CONFIG.name} · Shirley Ram | Técnica Profesional en Maquillaje`,
-  description: `${BUSINESS_CONFIG.tagline}. Más de 5 años de experiencia en novias, eventos sociales, quinceañeras y maquillaje artístico en Medellín.`,
+  description: `${BUSINESS_CONFIG.tagline}. Más de 5 años de experiencia en novias, eventos sociales, quinceañeras, peinados y maquillaje artístico.`,
 };
 
 export default function RootLayout({

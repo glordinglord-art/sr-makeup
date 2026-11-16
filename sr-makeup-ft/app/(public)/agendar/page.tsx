@@ -4,7 +4,7 @@ import { BrandLogo } from "@/shared/components/ui/brand-logo";
 
 export const metadata = {
   title: "Agendar Cita VIP | Sr.Makeup · Shirley Ram",
-  description: "Reserva tu cita de maquillaje para novias, eventos sociales, quinceañeras o clases en Medellín.",
+  description: "Reserva tu cita de maquillaje y peinado para novias, eventos sociales, quinceañeras o clases.",
 };
 
 export default function AgendarPage() {

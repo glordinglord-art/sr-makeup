@@ -130,7 +130,7 @@ export default function HomePage() {
                 </div>
 
                   <p className="text-stone-600 text-sm sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0">
-                    Especialista en maquillaje profesional y estilismo capilar (cepillados, secados, ondas y peinados) en Medellín. Más de 5 años diseñando looks completos con cosmética de alta gama y piel blindada.
+                    Especialista en maquillaje profesional y estilismo capilar (cepillados, secados, ondas y peinados). Más de 5 años diseñando looks completos con cosmética de alta gama y piel blindada.
                   </p>
 
                   {/* Botones de Acción */}
@@ -437,7 +437,7 @@ export default function HomePage() {
               <div className="rounded-3xl bg-gradient-to-br from-rose-500 via-rose-600 to-rose-700 p-8 sm:p-14 text-white text-center shadow-xl shadow-rose-500/20 relative overflow-hidden">
               <div className="relative z-10 space-y-5">
                 <span className="text-xs uppercase tracking-widest font-semibold bg-white/20 px-3.5 py-1 rounded-full inline-block backdrop-blur-xs">
-                  Agenda Abierta · Medellín & Alrededores
+                  Agenda Abierta · Estudio & Domicilio VIP
                 </span>
                 <h2 className="font-serif text-3xl sm:text-5xl font-bold">
                   ¿Lista para lucir inolvidable en tu evento?

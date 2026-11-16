@@ -18,7 +18,7 @@ const FAQS: FAQItem[] = [
   {
     question: "¿El servicio es en estudio privado o a domicilio?",
     answer:
-      "¡Manejamos ambas modalidades! Atendemos en nuestro estudio privado con todas las comodidades y también brindamos servicio VIP a domicilio en Medellín, Oriente Antioqueño y alrededores para novias, producciones o grupos de invitadas.",
+      "¡Manejamos ambas modalidades! Atendemos en nuestro estudio privado con todas las comodidades y también brindamos servicio VIP a domicilio en tu casa, hotel o lugar del evento para novias, producciones o grupos de invitadas.",
   },
   {
     question: "¿Qué es la técnica de 'Piel Blindada' y cuánto dura?",

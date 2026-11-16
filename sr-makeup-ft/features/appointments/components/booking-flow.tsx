@@ -283,6 +283,10 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
         alert("Por favor selecciona una fecha y horario para continuar.");
         return;
       }
+      if (locationType === "domicilio" && !address.trim()) {
+        alert("Por favor ingresa tu dirección para el servicio a domicilio VIP.");
+        return;
+      }
       if (occupiedTimes.includes(selectedTime)) {
         alert("Ese horario ya se encuentra ocupado. Por favor selecciona otro.");
         return;
@@ -304,7 +308,14 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
         return;
       }
 
-      const finalNotes = encodeNotesWithLook(notes, preferredLook);
+      const locationSummary =
+        locationType === "domicilio" && address.trim()
+          ? `Modalidad: A Domicilio VIP · Dirección: ${address.trim()}`
+          : "Modalidad: En Estudio Privado";
+      const combinedNotes = [locationSummary, notes.trim()]
+        .filter(Boolean)
+        .join("\n");
+      const finalNotes = encodeNotesWithLook(combinedNotes, preferredLook);
 
       // 2. Registro en base de datos Supabase a través del backend
       try {
@@ -345,7 +356,7 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
         date: selectedDate,
         time: selectedTime,
         locationType,
-        address: locationType === "domicilio" ? address : "Estudio Privado (Medellín)",
+        address: locationType === "domicilio" ? address : "Estudio Privado",
         price: selectedService.price,
         notes,
         status: "PENDING",
@@ -755,7 +766,7 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
                 >
                   <span className="font-serif font-bold text-sm text-stone-900 block">En Estudio</span>
                   <span className="text-[11px] text-stone-500 mt-1 block">
-                    Espacio privado con iluminación profesional en Medellín.
+                    Espacio privado con iluminación profesional.
                   </span>
                 </button>
 
@@ -777,12 +788,12 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
               {locationType === "domicilio" && (
                 <div className="space-y-1.5 pt-2 animate-in fade-in duration-200">
                   <label className="text-xs font-semibold text-stone-700 uppercase tracking-wider block">
-                    Dirección o Sector del Evento
+                    Tu Dirección o Lugar del Evento
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="Ej: Hotel Dann Carlton / Llanogrande / Poblado"
+                    placeholder="Ej: Calle, Barrio, Conjunto, Casa o Hotel"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                     className="w-full rounded-xl border border-stone-200 bg-stone-50/50 p-3 text-sm focus:border-rose-400 focus:bg-white focus:outline-none"
