@@ -2,8 +2,10 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Calendar,
+  CalendarDays,
   Image as ImageIcon,
   DollarSign,
   ExternalLink,
@@ -21,6 +23,7 @@ import { apiClient } from "@/shared/lib/api-client";
 const SESSION_KEY = "sr_makeup_admin_session";
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
   const [authorized, setAuthorized] = useState<boolean>(false);
   const [checkingSession, setCheckingSession] = useState<boolean>(true);
   const [pin, setPin] = useState<string>("");
@@ -255,10 +258,26 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           <nav className="hidden md:flex items-center gap-1.5">
             <Link
               href="/admin"
-              className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-stone-700 hover:bg-rose-50 hover:text-rose-700 transition-colors"
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold transition-colors ${
+                pathname === "/admin" || pathname === "/admin/citas"
+                  ? "bg-rose-50 text-rose-700"
+                  : "text-stone-700 hover:bg-rose-50 hover:text-rose-700"
+              }`}
             >
               <Calendar className="h-4 w-4 text-rose-500" />
               <span>Agenda de Citas</span>
+            </Link>
+
+            <Link
+              href="/admin/calendario"
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold transition-colors ${
+                pathname === "/admin/calendario"
+                  ? "bg-rose-50 text-rose-700"
+                  : "text-stone-700 hover:bg-rose-50 hover:text-rose-700"
+              }`}
+            >
+              <CalendarDays className="h-4 w-4 text-rose-500" />
+              <span>Calendario y Disponibilidad</span>
             </Link>
 
             <Link
@@ -299,6 +318,32 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
               <span className="hidden sm:inline">Bloquear</span>
             </Button>
           </div>
+        </div>
+
+        {/* Submenú móvil para alternar entre Agenda y Calendario */}
+        <div className="md:hidden border-t border-rose-50 px-4 py-2 flex items-center gap-2 bg-white/90">
+          <Link
+            href="/admin"
+            className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold transition-colors ${
+              pathname === "/admin" || pathname === "/admin/citas"
+                ? "bg-rose-50 text-rose-700"
+                : "text-stone-600 hover:bg-stone-50"
+            }`}
+          >
+            <Calendar className="h-3.5 w-3.5 text-rose-500" />
+            <span>Agenda</span>
+          </Link>
+          <Link
+            href="/admin/calendario"
+            className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold transition-colors ${
+              pathname === "/admin/calendario"
+                ? "bg-rose-50 text-rose-700"
+                : "text-stone-600 hover:bg-stone-50"
+            }`}
+          >
+            <CalendarDays className="h-3.5 w-3.5 text-rose-500" />
+            <span>Calendario</span>
+          </Link>
         </div>
       </header>
 

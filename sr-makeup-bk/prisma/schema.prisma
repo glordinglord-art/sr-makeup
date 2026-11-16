@@ -69,6 +69,17 @@ model Appointment {
   @@map("appointments")
 }
 
+model AvailabilityBlock {
+  id        String   @id @default(uuid())
+  date      String // Formato YYYY-MM-DD
+  time      String? // null = día completo bloqueado; HH:mm AM/PM = franja bloqueada
+  reason    String?
+  createdAt DateTime @default(now())
+
+  @@index([date])
+  @@map("availability_blocks")
+}
+
 model PortfolioItem {
   id             String   @id @default(uuid())
   title          String

@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../../shared/infrastructure/prisma/prisma.service';
-import type { AppointmentRepositoryPort } from '../../domain/ports/appointment-repository.port';
+import type {
+  AppointmentRepositoryPort,
+  AvailabilityBlockRecord,
+} from '../../domain/ports/appointment-repository.port';
 import {
   AppointmentEntity,
   AppointmentStatus,
@@ -66,6 +69,52 @@ export class PrismaAppointmentRepository implements AppointmentRepositoryPort {
 
   async delete(id: string): Promise<boolean> {
     await this.prisma.appointment.delete({
+      where: { id },
+    });
+    return true;
+  }
+
+  async findBlocks(params?: {
+    date?: string;
+    month?: string;
+  }): Promise<AvailabilityBlockRecord[]> {
+    const where = params?.date
+      ? { date: params.date }
+      : params?.month
+        ? { date: { startsWith: params.month } }
+        : undefined;
+
+    return this.prisma.availabilityBlock.findMany({
+      where,
+      orderBy: [{ date: 'asc' }, { time: 'asc' }],
+    });
+  }
+
+  async findBlock(
+    date: string,
+    time: string | null,
+  ): Promise<AvailabilityBlockRecord | null> {
+    return this.prisma.availabilityBlock.findFirst({
+      where: { date, time },
+    });
+  }
+
+  async createBlock(
+    date: string,
+    time: string | null,
+    reason?: string | null,
+  ): Promise<AvailabilityBlockRecord> {
+    return this.prisma.availabilityBlock.create({
+      data: {
+        date,
+        time,
+        reason: reason?.trim() || null,
+      },
+    });
+  }
+
+  async deleteBlock(id: string): Promise<boolean> {
+    await this.prisma.availabilityBlock.delete({
       where: { id },
     });
     return true;

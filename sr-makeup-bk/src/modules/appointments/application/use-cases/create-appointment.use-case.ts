@@ -14,10 +14,19 @@ export class CreateAppointmentUseCase {
   ) {}
 
   async execute(dto: CreateAppointmentDto): Promise<AppointmentEntity> {
-    const existing = await this.appointmentRepository.findByDateAndTime(
-      dto.date,
-      dto.time,
+    const [existing, blocks] = await Promise.all([
+      this.appointmentRepository.findByDateAndTime(dto.date, dto.time),
+      this.appointmentRepository.findBlocks({ date: dto.date }),
+    ]);
+
+    const isBlocked = blocks.some(
+      (b) => b.time === null || b.time === dto.time,
     );
+    if (isBlocked) {
+      throw new BadRequestException(
+        new SlotUnavailableException(dto.date, dto.time).message,
+      );
+    }
 
     if (existing && existing.status !== 'CANCELLED') {
       throw new BadRequestException(

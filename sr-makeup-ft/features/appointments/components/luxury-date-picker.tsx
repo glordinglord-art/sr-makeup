@@ -14,6 +14,7 @@ interface LuxuryDatePickerProps {
   selectedDate: string; // YYYY-MM-DD
   onDateChange: (date: string) => void;
   minDate?: string;
+  blockedDates?: string[];
 }
 
 const MONTH_NAMES = [
@@ -37,6 +38,7 @@ export function LuxuryDatePicker({
   selectedDate,
   onDateChange,
   minDate,
+  blockedDates = [],
 }: LuxuryDatePickerProps) {
   // Modalidad de vista: "strip" (días rápidos deslizables) o "calendar" (mes completo)
   const [viewMode, setViewMode] = useState<"strip" | "calendar">("strip");
@@ -170,15 +172,19 @@ export function LuxuryDatePicker({
           <div className="flex gap-2 overflow-x-auto pb-2 pt-1 scrollbar-none px-0.5 -mx-1 sm:mx-0">
             {quickDays.map((item) => {
               const isSelected = selectedDate === item.iso;
+              const isBlocked = blockedDates.includes(item.iso);
               return (
                 <button
                   key={item.iso}
                   type="button"
-                  onClick={() => onDateChange(item.iso)}
-                  className={`flex flex-col items-center justify-between min-w-[70px] sm:min-w-[76px] py-3 px-2 rounded-2xl border-2 transition-all cursor-pointer shrink-0 ${
-                    isSelected
-                      ? "border-rose-500 bg-gradient-to-b from-rose-500 to-rose-600 text-white shadow-md shadow-rose-200 -translate-y-0.5 scale-105"
-                      : "border-rose-100/80 bg-white hover:border-rose-300 text-stone-700 shadow-xs"
+                  disabled={isBlocked}
+                  onClick={() => !isBlocked && onDateChange(item.iso)}
+                  className={`flex flex-col items-center justify-between min-w-[70px] sm:min-w-[76px] py-3 px-2 rounded-2xl border-2 transition-all shrink-0 ${
+                    isBlocked
+                      ? "border-stone-200 bg-stone-100 text-stone-400 cursor-not-allowed opacity-60"
+                      : isSelected
+                        ? "border-rose-500 bg-gradient-to-b from-rose-500 to-rose-600 text-white shadow-md shadow-rose-200 -translate-y-0.5 scale-105 cursor-pointer"
+                        : "border-rose-100/80 bg-white hover:border-rose-300 text-stone-700 shadow-xs cursor-pointer"
                   }`}
                 >
                   <span
@@ -269,7 +275,8 @@ export function LuxuryDatePicker({
               }
 
               const isSelected = selectedDate === day.iso;
-              const isDisabled = day.isPast;
+              const isBlocked = blockedDates.includes(day.iso);
+              const isDisabled = day.isPast || isBlocked;
 
               return (
                 <button

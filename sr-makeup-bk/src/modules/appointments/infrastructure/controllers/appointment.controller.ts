@@ -13,6 +13,10 @@ import { GetAvailabilityUseCase } from '../../application/use-cases/get-availabi
 import { GetAppointmentsUseCase } from '../../application/use-cases/get-appointments.use-case';
 import { UpdateAppointmentStatusUseCase } from '../../application/use-cases/update-appointment-status.use-case';
 import { DeleteAppointmentUseCase } from '../../application/use-cases/delete-appointment.use-case';
+import {
+  ManageAvailabilityBlocksUseCase,
+  type ToggleAvailabilityBlockDto,
+} from '../../application/use-cases/manage-availability-blocks.use-case';
 import { CreateAppointmentDto } from '../../application/dtos/create-appointment.dto';
 import type { AppointmentStatus } from '../../domain/entities/appointment.entity';
 
@@ -24,6 +28,7 @@ export class AppointmentController {
     private readonly getAppointmentsUseCase: GetAppointmentsUseCase,
     private readonly updateAppointmentStatusUseCase: UpdateAppointmentStatusUseCase,
     private readonly deleteAppointmentUseCase: DeleteAppointmentUseCase,
+    private readonly manageAvailabilityBlocksUseCase: ManageAvailabilityBlocksUseCase,
   ) {}
 
   @Post()
@@ -36,6 +41,24 @@ export class AppointmentController {
   async getAvailability(@Query('date') date: string) {
     const targetDate = date || new Date().toISOString().split('T')[0];
     return this.getAvailabilityUseCase.execute(targetDate);
+  }
+
+  @Get('blocks')
+  async getBlocks(
+    @Query('date') date?: string,
+    @Query('month') month?: string,
+  ) {
+    return this.manageAvailabilityBlocksUseCase.getBlocks({ date, month });
+  }
+
+  @Post('blocks/toggle')
+  async toggleBlock(@Body() dto: ToggleAvailabilityBlockDto) {
+    return this.manageAvailabilityBlocksUseCase.toggleBlock(dto);
+  }
+
+  @Delete('blocks/:id')
+  async deleteBlock(@Param('id') id: string) {
+    return this.manageAvailabilityBlocksUseCase.deleteBlock(id);
   }
 
   @Get()

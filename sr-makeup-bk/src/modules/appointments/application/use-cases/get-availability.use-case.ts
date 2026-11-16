@@ -25,7 +25,22 @@ export class GetAvailabilityUseCase {
   ) {}
 
   async execute(date: string): Promise<SlotAvailability[]> {
-    const bookedAppointments = await this.appointmentRepository.findByDate(date);
+    const [bookedAppointments, blocks] = await Promise.all([
+      this.appointmentRepository.findByDate(date),
+      this.appointmentRepository.findBlocks({ date }),
+    ]);
+
+    const fullDayBlocked = blocks.some((b) => b.time === null);
+    if (fullDayBlocked) {
+      return ALL_SLOTS.map((slot) => ({
+        time: slot,
+        available: false,
+      }));
+    }
+
+    const blockedTimes = new Set(
+      blocks.map((b) => b.time).filter((t): t is string => t !== null),
+    );
     const bookedTimes = new Set(
       bookedAppointments
         .filter((a) => a.status !== 'CANCELLED')
@@ -34,7 +49,7 @@ export class GetAvailabilityUseCase {
 
     return ALL_SLOTS.map((slot) => ({
       time: slot,
-      available: !bookedTimes.has(slot),
+      available: !bookedTimes.has(slot) && !blockedTimes.has(slot),
     }));
   }
 }

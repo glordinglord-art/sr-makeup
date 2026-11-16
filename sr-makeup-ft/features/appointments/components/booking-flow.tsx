@@ -204,12 +204,23 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
   const [loading, setLoading] = useState(false);
   const [confirmedAppointment, setConfirmedAppointment] = useState<ExtendedAppointment | null>(null);
   const [serverOccupiedTimes, setServerOccupiedTimes] = useState<string[]>([]);
+  const [blockedDates, setBlockedDates] = useState<string[]>([]);
 
   useEffect(() => {
     // Inicializar fecha para el día siguiente como mínimo
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     setSelectedDate(tomorrow.toISOString().split("T")[0]);
+
+    apiClient<{ date: string; time: string | null }[]>("/appointments/blocks")
+      .then((blocks) => {
+        if (!Array.isArray(blocks)) return;
+        const fullDays = blocks
+          .filter((b) => b.time === null)
+          .map((b) => b.date);
+        setBlockedDates(fullDays);
+      })
+      .catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -670,6 +681,7 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
                   <LuxuryDatePicker
                     selectedDate={selectedDate}
                     onDateChange={setSelectedDate}
+                    blockedDates={blockedDates}
                   />
                 </div>
               </div>
