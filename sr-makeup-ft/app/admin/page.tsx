@@ -26,6 +26,7 @@ import { formatCurrency } from "@/shared/lib/utils";
 import { appointmentsStore, ExtendedAppointment } from "@/shared/lib/appointments-store";
 import { AdminAppointmentCardSkeleton } from "@/shared/components/ui/skeleton";
 import { apiClient } from "@/shared/lib/api-client";
+import { parseLookFromNotes } from "@/shared/lib/look-reference";
 
 const SERVICE_CATALOG_MAP: Record<string, { title: string; price: number }> = {
   novias: { title: "Maquillaje de Novias (Bridal Glam)", price: 320000 },
@@ -497,11 +498,37 @@ export default function AdminDashboardPage() {
                         )}
                       </div>
 
-                      {apt.notes && (
-                        <p className="text-xs text-stone-600 bg-stone-50/80 p-2.5 rounded-xl italic border border-stone-100">
-                          "{apt.notes}"
-                        </p>
-                      )}
+                      {(() => {
+                        const { look, cleanNotes } = parseLookFromNotes(apt.notes);
+                        return (
+                          <>
+                            {look && (
+                              <div className="flex items-center gap-3 bg-rose-50/70 border border-rose-200/80 rounded-2xl p-2.5">
+                                {look.imageUrl && (
+                                  <img
+                                    src={look.imageUrl}
+                                    alt={look.title}
+                                    className="h-12 w-12 rounded-xl object-cover border border-rose-200 bg-white shrink-0"
+                                  />
+                                )}
+                                <div className="min-w-0">
+                                  <span className="text-[10px] font-bold uppercase tracking-wider text-rose-600 block">
+                                    Look Elegido por la Clienta
+                                  </span>
+                                  <span className="text-xs font-bold text-stone-900 truncate block">
+                                    {look.title}
+                                  </span>
+                                </div>
+                              </div>
+                            )}
+                            {cleanNotes && (
+                              <p className="text-xs text-stone-600 bg-stone-50/80 p-2.5 rounded-xl italic border border-stone-100">
+                                "{cleanNotes}"
+                              </p>
+                            )}
+                          </>
+                        );
+                      })()}
                     </div>
                   </div>
 

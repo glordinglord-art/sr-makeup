@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { BookingFlow } from "@/features/appointments";
 import { BrandLogo } from "@/shared/components/ui/brand-logo";
 
@@ -13,7 +14,9 @@ export default function AgendarPage() {
         <div className="flex justify-center">
           <BrandLogo size="md" showText={false} />
         </div>
-        <BookingFlow />
+        <Suspense fallback={<div className="text-center py-12 text-sm text-stone-500">Cargando agenda...</div>}>
+          <BookingFlow />
+        </Suspense>
       </div>
     </div>
   );

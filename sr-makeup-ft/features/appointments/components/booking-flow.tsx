@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Calendar as CalendarIcon,
@@ -27,6 +28,7 @@ import { BUSINESS_CONFIG } from "@/shared/constants/business";
 import { formatCurrency } from "@/shared/lib/utils";
 import { apiClient } from "@/shared/lib/api-client";
 import { appointmentsStore, ExtendedAppointment } from "@/shared/lib/appointments-store";
+import { encodeNotesWithLook, PreferredLook } from "@/shared/lib/look-reference";
 import { LuxuryDatePicker } from "./luxury-date-picker";
 
 interface BookingFlowProps {
@@ -185,12 +187,15 @@ const AVAILABLE_TIMES = [
 ];
 
 export function BookingFlow({ initialServiceId }: BookingFlowProps) {
+  const searchParams = useSearchParams();
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
 
   // Estado del formulario
   const [selectedServiceId, setSelectedServiceId] = useState<string>(
     initialServiceId || "novias"
   );
+  const [serviceFilter, setServiceFilter] = useState<"all" | "makeup" | "cabello" | "clases">("all");
+  const [preferredLook, setPreferredLook] = useState<PreferredLook | null>(null);
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [selectedTime, setSelectedTime] = useState<string>("09:30 AM");
   const [locationType, setLocationType] = useState<"estudio" | "domicilio">("estudio");
@@ -212,6 +217,23 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
     tomorrow.setDate(tomorrow.getDate() + 1);
     setSelectedDate(tomorrow.toISOString().split("T")[0]);
 
+    const paramService = searchParams.get("servicio");
+    const paramLook = searchParams.get("look");
+    const paramLookImg = searchParams.get("lookImg");
+
+    if (paramService && SERVICES_CATALOG.some((s) => s.id === paramService)) {
+      setSelectedServiceId(paramService);
+      if (paramService === "ondas-peinados" || paramService === "combo-glam-cabello" || paramService === "cepillado-secado" || paramService === "tratamiento-capilar") {
+        setServiceFilter("cabello");
+      }
+    }
+    if (paramLook) {
+      setPreferredLook({
+        title: paramLook,
+        imageUrl: paramLookImg || undefined,
+      });
+    }
+
     apiClient<{ date: string; time: string | null }[]>("/appointments/blocks")
       .then((blocks) => {
         if (!Array.isArray(blocks)) return;
@@ -221,7 +243,7 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
         setBlockedDates(fullDays);
       })
       .catch(() => {});
-  }, []);
+  }, [searchParams]);
 
   useEffect(() => {
     if (!selectedDate) return;
@@ -282,6 +304,8 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
         return;
       }
 
+      const finalNotes = encodeNotesWithLook(notes, preferredLook);
+
       // 2. Registro en base de datos Supabase a través del backend
       try {
         await apiClient("/appointments", {
@@ -293,7 +317,7 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
             serviceId: selectedService.id,
             date: selectedDate,
             time: selectedTime,
-            notes,
+            notes: finalNotes,
           }),
         });
       } catch (err: any) {
@@ -537,12 +561,86 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
               ¿Qué servicio de maquillaje o cabello deseas?
             </h2>
             <p className="text-stone-500 text-xs sm:text-sm">
-              Selecciona el servicio que mejor se adapte a tu evento especial.
+              Selecciona tu servicio o look preferido y pasa directo a elegir fecha y hora.
             </p>
           </div>
 
+          {/* Look Preferido / Personalizado si viene desde el portafolio */}
+          {preferredLook && (
+            <div className="rounded-3xl bg-gradient-to-r from-rose-50 via-white to-rose-50/70 border-2 border-rose-300 p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
+              <div className="flex items-center gap-3.5">
+                {preferredLook.imageUrl && (
+                  <img
+                    src={preferredLook.imageUrl}
+                    alt={preferredLook.title}
+                    className="h-16 w-16 rounded-2xl object-cover border border-rose-200 bg-white shrink-0"
+                  />
+                )}
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-rose-600 bg-white px-2.5 py-0.5 rounded-full border border-rose-200 inline-block mb-1">
+                    Look Preferido / Personalizado
+                  </span>
+                  <h4 className="font-serif text-lg font-bold text-stone-900 leading-snug">
+                    {preferredLook.title}
+                  </h4>
+                  <p className="text-xs text-stone-500">
+                    Shirley verá esta foto exacta en tu reserva.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 self-end sm:self-center">
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => setPreferredLook(null)}
+                  className="text-xs text-stone-500 hover:text-rose-600"
+                >
+                  Quitar look
+                </Button>
+                <Button
+                  type="button"
+                  size="sm"
+                  onClick={handleNextStep}
+                  className="gap-1.5 rounded-full px-4 font-semibold"
+                >
+                  <span>Elegir fecha</span>
+                  <ChevronRight className="h-3.5 w-3.5" />
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {/* Filtros rápidos de servicio */}
+          <div className="flex items-center justify-center gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {[
+              { id: "all", label: "Todos" },
+              { id: "makeup", label: "Maquillaje" },
+              { id: "cabello", label: "Peinados & Cabello" },
+              { id: "clases", label: "Clases" },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setServiceFilter(tab.id as typeof serviceFilter)}
+                className={`shrink-0 px-4 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+                  serviceFilter === tab.id
+                    ? "bg-rose-500 text-white shadow-sm shadow-rose-200"
+                    : "bg-white text-stone-600 border border-rose-100 hover:bg-rose-50"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {SERVICES_CATALOG.map((service) => {
+            {SERVICES_CATALOG.filter((service) => {
+              if (serviceFilter === "all") return true;
+              if (serviceFilter === "cabello") return service.category === "cabello";
+              if (serviceFilter === "clases") return service.category === "automaquillaje";
+              return service.category !== "cabello" && service.category !== "automaquillaje";
+            }).map((service) => {
               const isSelected = selectedServiceId === service.id;
               return (
                 <div
@@ -579,7 +677,7 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
                     </ul>
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-rose-50 flex items-center justify-between">
+                  <div className="mt-6 pt-4 border-t border-rose-50 flex items-center justify-between gap-3">
                     <div>
                       <span className="text-[10px] text-stone-400 block uppercase font-medium">Inversión</span>
                       <span className="font-serif text-2xl font-bold text-stone-900">
@@ -587,19 +685,38 @@ export function BookingFlow({ initialServiceId }: BookingFlowProps) {
                       </span>
                     </div>
 
-                    <div className={`h-6 w-6 rounded-full border-2 flex items-center justify-center transition-all ${isSelected ? "border-rose-500 bg-rose-500 text-white" : "border-stone-300"
-                      }`}>
-                      {isSelected && <Check className="h-3.5 w-3.5" />}
-                    </div>
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant={isSelected ? "primary" : "outline"}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedServiceId(service.id);
+                        setStep(2);
+                      }}
+                      className="rounded-full gap-1.5 px-4 text-xs font-semibold"
+                    >
+                      <span>{isSelected ? "Continuar" : "Elegir"}</span>
+                      <ChevronRight className="h-3.5 w-3.5" />
+                    </Button>
                   </div>
                 </div>
               );
             })}
           </div>
 
-          <div className="flex justify-end pt-4">
-            <Button size="lg" onClick={handleNextStep} className="gap-2 px-8 font-semibold">
-              <span>Continuar a Fecha y Hora</span>
+          {/* Barra sticky inferior para avanzar sin tener que bajar hasta el final */}
+          <div className="sticky bottom-4 z-30 rounded-2xl bg-white/95 backdrop-blur-md border border-rose-200 shadow-xl shadow-rose-950/10 p-3.5 sm:p-4 flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <span className="text-[10px] uppercase font-bold tracking-wider text-rose-500 block">
+                Seleccionado
+              </span>
+              <p className="text-xs sm:text-sm font-bold text-stone-900 truncate">
+                {selectedService.title} · {formatCurrency(selectedService.price)}
+              </p>
+            </div>
+            <Button size="sm" onClick={handleNextStep} className="gap-1.5 px-5 rounded-full font-semibold shrink-0">
+              <span>Continuar</span>
               <ChevronRight className="h-4 w-4" />
             </Button>
           </div>

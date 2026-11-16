@@ -41,14 +41,26 @@ const CATEGORY_LABELS: Record<string, string> = {
   automaquillaje: "Automaquillaje",
 };
 
+const CATEGORY_TO_SERVICE: Record<string, string> = {
+  cabello: "ondas-peinados",
+  novias: "novias",
+  social: "social",
+  quinceaneras: "quinceaneras",
+  artistico: "artistico",
+  editorial: "artistico",
+  automaquillaje: "automaquillaje",
+};
+
 const SAMPLE_LOOKS: PortfolioItem[] = [
   {
     id: "1",
     title: "Novia Radiante & Piel Blindada",
     category: "novias",
     imageUrl: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800&auto=format&fit=crop",
-    description: "Look atemporal de ensueño con acabado glow perlado, tonos tierra y labios nude.",
-    productsUsed: ["Charlotte Tilbury Flawless Filter", "Huda Beauty Nude Palette"],
+    description:
+      "Preparación facial hidratante de lujo, piel blindada resistente a lágrimas y sudor durante más de 16 horas, tonos tierra luminosos, pestañas efecto visón personalizadas y labios nude atemporales.",
+    idealFor: "Bodas de día o noche, ceremonia religiosa y recepción",
+    duration: "90 min aprox.",
     isFeatured: true,
     createdAt: "2026-01-01",
   },
@@ -57,7 +69,10 @@ const SAMPLE_LOOKS: PortfolioItem[] = [
     title: "Smokey Glam & Labios Nude",
     category: "social",
     imageUrl: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=800&auto=format&fit=crop",
-    description: "Ojos ahumados en tonos café profundo con destellos dorados y pestañas de visón.",
+    description:
+      "Ojos ahumados difuminados en tonos café profundo y bronce con destellos dorados en el párpado, piel satinada de larga duración, contorno esculpido y pestañas postizas incluidas.",
+    idealFor: "Fiestas de gala, matrimonios como invitada y cenas nocturnas",
+    duration: "60 min aprox.",
     isFeatured: true,
     createdAt: "2026-01-02",
   },
@@ -66,7 +81,10 @@ const SAMPLE_LOOKS: PortfolioItem[] = [
     title: "Maquillaje Artístico 'Euphoria Glow'",
     category: "artistico",
     imageUrl: "https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?q=80&w=800&auto=format&fit=crop",
-    description: "Diseño gráfico con delineado flotante, perlas incrustadas y pigmentos neón.",
+    description:
+      "Diseño editorial con delineado gráfico flotante, perlas incrustadas a mano, pigmentos luminosos de alta definición y piel efecto cristal pensada para fotografía 4K.",
+    idealFor: "Sesiones fotográficas, editoriales, conciertos y pasarela",
+    duration: "90 min aprox.",
     isFeatured: false,
     createdAt: "2026-01-03",
   },
@@ -75,7 +93,10 @@ const SAMPLE_LOOKS: PortfolioItem[] = [
     title: "Quinceañera Princesa Romántica",
     category: "quinceaneras",
     imageUrl: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?q=80&w=800&auto=format&fit=crop",
-    description: "Tonos rosados suaves, piel de terciopelo luminosa y brillo delicado.",
+    description:
+      "Tonos rosados suaves con destellos perlados en el lagrimal, piel fresca y aterciopelada sin efecto pesado, rubor juvenil y fijación reforzada para bailar toda la noche.",
+    idealFor: "Fiestas de 15 años, grados y celebraciones juveniles",
+    duration: "75 min aprox.",
     isFeatured: true,
     createdAt: "2026-01-04",
   },
@@ -84,7 +105,10 @@ const SAMPLE_LOOKS: PortfolioItem[] = [
     title: "Editorial Golden Hour",
     category: "artistico",
     imageUrl: "https://images.unsplash.com/photo-1503104834685-7205e8607eb9?q=80&w=800&auto=format&fit=crop",
-    description: "Maquillaje de alta definición con piel húmeda y toques cálidos en mejillas y labios.",
+    description:
+      "Maquillaje de alta definición con acabado glow dorado, piel hidratada con efecto húmedo natural, cejas orgánicas laminadas y toques cálidos en mejillas y labios.",
+    idealFor: "Producciones al aire libre, book personal y campañas",
+    duration: "75 min aprox.",
     isFeatured: false,
     createdAt: "2026-01-05",
   },
@@ -93,7 +117,10 @@ const SAMPLE_LOOKS: PortfolioItem[] = [
     title: "Social Glam 'Red Carpet'",
     category: "social",
     imageUrl: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=800&auto=format&fit=crop",
-    description: "Clásico y sofisticado con labios carmín mate y piel ultra pulida.",
+    description:
+      "Look clásico de alfombra roja con piel ultra pulida de cobertura uniforme, delineado felino preciso y labios carmín mate de larga fijación sin transferencia.",
+    idealFor: "Eventos formales, grados y celebraciones especiales",
+    duration: "60 min aprox.",
     isFeatured: false,
     createdAt: "2026-01-06",
   },
@@ -102,7 +129,10 @@ const SAMPLE_LOOKS: PortfolioItem[] = [
     title: "Recogido Trenzado Floral (Novia & Gala)",
     category: "cabello",
     imageUrl: "/images/peinados/peinado-1-recogido-floral.jpg",
-    description: "Moño bajo tejido con volumen suave y tocado artesanal de perlas y flores blancas.",
+    description:
+      "Moño bajo estructurado con entrelazado trenzado de volumen suave, fijación flexible libre de frizz y aplicación delicada de tocado con perlas y flores blancas (puedes traer tu propio accesorio).",
+    idealFor: "Novias, damas de honor, quinceañeras y galas elegantes",
+    duration: "60 min aprox.",
     isFeatured: true,
     createdAt: "2026-01-07",
   },
@@ -111,7 +141,10 @@ const SAMPLE_LOOKS: PortfolioItem[] = [
     title: "Chignon Clásico Pulido",
     category: "cabello",
     imageUrl: "/images/peinados/peinado-2-chignon-clasico.jpg",
-    description: "Recogido bajo limpio y atemporal con acabado sedoso ideal para bodas y grados.",
+    description:
+      "Recogido bajo limpio y atemporal con acabado sedoso y brillo natural. Diseñado con sujeción interna invisible para resistir horas de evento sin perder su forma.",
+    idealFor: "Bodas civiles o religiosas, grados y vestidos de espalda descubierta",
+    duration: "50 min aprox.",
     isFeatured: true,
     createdAt: "2026-01-08",
   },
@@ -120,7 +153,10 @@ const SAMPLE_LOOKS: PortfolioItem[] = [
     title: "Semirecogido con Trenza & Listón",
     category: "cabello",
     imageUrl: "/images/peinados/peinado-3-semirecogido-liston.jpg",
-    description: "Trenza lateral pegada entrelazada con listón rojo satinado y caída natural.",
+    description:
+      "Semirecogido juvenil con trenza pegada lateral entrelazada con listón rojo satinado (personalizable al color de tu vestido) y melena suelta hidratada o con ondas suaves.",
+    idealFor: "Fiestas temáticas, grados, eventos casual-chic y cumpleaños",
+    duration: "50 min aprox.",
     isFeatured: false,
     createdAt: "2026-01-09",
   },
@@ -129,7 +165,10 @@ const SAMPLE_LOOKS: PortfolioItem[] = [
     title: "Boxeadoras con Kanekalon Bicolor",
     category: "cabello",
     imageUrl: "/images/peinados/peinado-4-trenzas-kanekalon-bicolor.jpg",
-    description: "Trenzas boxeadoras definidas con extensiones en rosa pastel y tono vino profundo.",
+    description:
+      "Dos trenzas boxeadoras simétricas desde la raíz con extensión de kanekalon en combinación rosa pastel y tono vino profundo. Cómodas, firmes y con volumen parejo de raíz a puntas.",
+    idealFor: "Festivales, conciertos, viajes, gimnasio o look urbano",
+    duration: "75 min aprox.",
     isFeatured: true,
     createdAt: "2026-01-10",
   },
@@ -138,7 +177,10 @@ const SAMPLE_LOOKS: PortfolioItem[] = [
     title: "Trenzas Pegadas con Diseño Lateral",
     category: "cabello",
     imageUrl: "/images/peinados/peinado-5-trenzas-diseno-lateral.jpg",
-    description: "Perfil con particiones limpias y trenzado en kanekalon bicolor de larga duración.",
+    description:
+      "Diseño de perfil con particiones limpias, trenzado pegado al cuero cabelludo y mezcla de kanekalon bicolor que aporta largo y color sin maltratar tu cabello natural.",
+    idealFor: "Eventos musicales, sesiones de fotos y vacaciones",
+    duration: "90 min aprox.",
     isFeatured: false,
     createdAt: "2026-01-11",
   },
@@ -147,7 +189,10 @@ const SAMPLE_LOOKS: PortfolioItem[] = [
     title: "Trenzas Geométricas en Vino & Rosa",
     category: "cabello",
     imageUrl: "/images/peinados/peinado-6-trenzas-geometricas-vino.jpg",
-    description: "Diseño artístico con líneas geométricas laterales y acabado pulido en las puntas.",
+    description:
+      "Trenzado artístico con líneas geométricas laterales definidas, trenza suelta frontal de acento y acabado sellado en las puntas para máxima duración durante varios días.",
+    idealFor: "Festivales, cumpleaños, editoriales y looks llamativos",
+    duration: "90 min aprox.",
     isFeatured: false,
     createdAt: "2026-01-12",
   },
@@ -432,6 +477,27 @@ export function PortfolioGrid({
                   </p>
                 )}
 
+                {(activeItem.idealFor || activeItem.duration) && (
+                  <div className="rounded-2xl bg-rose-50/70 border border-rose-100 p-3.5 space-y-2 text-xs">
+                    {activeItem.idealFor && (
+                      <div>
+                        <span className="font-bold text-rose-600 uppercase text-[10px] tracking-wider block">
+                          Ideal para
+                        </span>
+                        <span className="text-stone-700">{activeItem.idealFor}</span>
+                      </div>
+                    )}
+                    {activeItem.duration && (
+                      <div>
+                        <span className="font-bold text-rose-600 uppercase text-[10px] tracking-wider block">
+                          Tiempo estimado
+                        </span>
+                        <span className="text-stone-700">{activeItem.duration}</span>
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 <div className="pt-2 border-t border-rose-100 flex items-center gap-2 text-xs text-stone-500">
                   <Sparkles className="h-4 w-4 text-rose-400 shrink-0" />
                   <span>Trabajo realizado por Shirley Ram · Sr.Makeup</span>
@@ -439,7 +505,15 @@ export function PortfolioGrid({
               </div>
 
               <div className="space-y-2.5 pt-2">
-                <Link href="/agendar" onClick={handleClose} className="block">
+                <Link
+                  href={`/agendar?servicio=${encodeURIComponent(
+                    CATEGORY_TO_SERVICE[activeItem.category] || "social"
+                  )}&look=${encodeURIComponent(activeItem.title)}&lookImg=${encodeURIComponent(
+                    activeItem.imageUrl
+                  )}`}
+                  onClick={handleClose}
+                  className="block"
+                >
                   <Button
                     variant="primary"
                     className="w-full rounded-2xl gap-2 py-5 text-sm font-bold shadow-md shadow-rose-200"

@@ -6,6 +6,8 @@ export interface PortfolioItem {
   beforeImageUrl?: string; // Para comparativa Antes y Después
   description?: string;
   productsUsed?: string[];
+  idealFor?: string;
+  duration?: string;
   isFeatured: boolean;
   createdAt: string;
 }

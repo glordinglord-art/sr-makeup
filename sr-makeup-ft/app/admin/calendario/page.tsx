@@ -22,6 +22,7 @@ import { Card } from "@/shared/components/ui/card";
 import { Badge } from "@/shared/components/ui/badge";
 import { Input } from "@/shared/components/ui/input";
 import { apiClient } from "@/shared/lib/api-client";
+import { parseLookFromNotes } from "@/shared/lib/look-reference";
 import {
   appointmentsApi,
   AvailabilityBlock,
@@ -542,6 +543,7 @@ export default function AdminCalendarPage() {
                 const isToggling = togglingKey === `${selectedDate}-${slot}`;
 
                 if (appt) {
+                  const { look } = parseLookFromNotes(appt.notes);
                   return (
                     <div
                       key={slot}
@@ -583,6 +585,26 @@ export default function AdminCalendarPage() {
                           {appt.clientPhone}
                         </span>
                       </div>
+
+                      {look && (
+                        <div className="flex items-center gap-2.5 bg-white/90 border border-rose-200/80 rounded-xl p-2">
+                          {look.imageUrl && (
+                            <img
+                              src={look.imageUrl}
+                              alt={look.title}
+                              className="h-10 w-10 rounded-lg object-cover border border-rose-100 shrink-0"
+                            />
+                          )}
+                          <div className="min-w-0">
+                            <span className="text-[9px] font-bold uppercase tracking-wider text-rose-500 block">
+                              Look elegido
+                            </span>
+                            <span className="text-xs font-semibold text-stone-900 truncate block">
+                              {look.title}
+                            </span>
+                          </div>
+                        </div>
+                      )}
 
                       <div className="flex items-center gap-2 pt-1">
                         {appt.status === "PENDING" && (
