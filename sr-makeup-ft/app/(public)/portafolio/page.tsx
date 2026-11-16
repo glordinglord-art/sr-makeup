@@ -3,7 +3,7 @@ import { BrandLogo } from "@/shared/components/ui/brand-logo";
 
 export const metadata = {
   title: "Portafolio de Creaciones | Sr.Makeup · Shirley Ram",
-  description: "Galería de looks creados por Shirley Ram: novias, eventos sociales, quinceañeras y maquillaje artístico.",
+  description: "Galería de looks y peinados creados por Shirley Ram: novias, eventos sociales, quinceañeras, trenzas y estilismo capilar.",
 };
 
 export default function PortafolioPage() {
@@ -20,7 +20,7 @@ export default function PortafolioPage() {
           Portafolio de Trabajos
         </h1>
         <p className="text-stone-600 text-sm sm:text-base leading-relaxed">
-          Cada maquillaje es una obra personalizada que resalta la belleza y personalidad de cada clienta. Inspírate para tu próximo evento.
+          Cada maquillaje y peinado es una obra personalizada que resalta la belleza y personalidad de cada clienta. Inspírate para tu próximo evento.
         </p>
       </div>
 

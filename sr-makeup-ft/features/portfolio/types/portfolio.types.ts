@@ -1,7 +1,7 @@
 export interface PortfolioItem {
   id: string;
   title: string;
-  category: "novias" | "social" | "quinceaneras" | "editorial" | "automaquillaje" | "artistico";
+  category: "novias" | "social" | "quinceaneras" | "editorial" | "automaquillaje" | "artistico" | "cabello";
   imageUrl: string;
   beforeImageUrl?: string; // Para comparativa Antes y Después
   description?: string;

@@ -66,6 +66,60 @@ const SAMPLE_LOOKS: PortfolioItem[] = [
     isFeatured: true,
     createdAt: "2026-01-06",
   },
+  {
+    id: "7",
+    title: "Recogido Trenzado Floral (Novia & Gala)",
+    category: "cabello",
+    imageUrl: "/images/peinados/peinado-1-recogido-floral.jpg",
+    description: "Moño bajo tejido con volumen suave y tocado artesanal de perlas y flores blancas.",
+    isFeatured: true,
+    createdAt: "2026-01-07",
+  },
+  {
+    id: "8",
+    title: "Chignon Clásico Pulido",
+    category: "cabello",
+    imageUrl: "/images/peinados/peinado-2-chignon-clasico.jpg",
+    description: "Recogido bajo limpio y atemporal con acabado sedoso ideal para bodas y grados.",
+    isFeatured: true,
+    createdAt: "2026-01-08",
+  },
+  {
+    id: "9",
+    title: "Semirecogido con Trenza & Listón",
+    category: "cabello",
+    imageUrl: "/images/peinados/peinado-3-semirecogido-liston.jpg",
+    description: "Trenza lateral pegada entrelazada con listón rojo satinado y caída natural.",
+    isFeatured: false,
+    createdAt: "2026-01-09",
+  },
+  {
+    id: "10",
+    title: "Boxeadoras con Kanekalon Bicolor",
+    category: "cabello",
+    imageUrl: "/images/peinados/peinado-4-trenzas-kanekalon-bicolor.jpg",
+    description: "Trenzas boxeadoras definidas con extensiones en rosa pastel y tono vino profundo.",
+    isFeatured: true,
+    createdAt: "2026-01-10",
+  },
+  {
+    id: "11",
+    title: "Trenzas Pegadas con Diseño Lateral",
+    category: "cabello",
+    imageUrl: "/images/peinados/peinado-5-trenzas-diseno-lateral.jpg",
+    description: "Perfil con particiones limpias y trenzado en kanekalon bicolor de larga duración.",
+    isFeatured: false,
+    createdAt: "2026-01-11",
+  },
+  {
+    id: "12",
+    title: "Trenzas Geométricas en Vino & Rosa",
+    category: "cabello",
+    imageUrl: "/images/peinados/peinado-6-trenzas-geometricas-vino.jpg",
+    description: "Diseño artístico con líneas geométricas laterales y acabado pulido en las puntas.",
+    isFeatured: false,
+    createdAt: "2026-01-12",
+  },
 ];
 
 export function PortfolioGrid({ items = SAMPLE_LOOKS }: PortfolioGridProps) {
@@ -106,42 +160,60 @@ export function PortfolioGrid({ items = SAMPLE_LOOKS }: PortfolioGridProps) {
 
       {/* Grid de Fotos */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
-        {filteredItems.map((item) => (
-          <div
-            key={item.id}
-            className="group relative overflow-hidden rounded-3xl bg-stone-100 shadow-sm border border-rose-100/50 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-rose-950/10"
-          >
-            <div className="aspect-4/5 w-full relative overflow-hidden">
-              <img
-                src={item.imageUrl}
-                alt={item.title}
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-108"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-stone-950/85 via-stone-950/20 to-transparent opacity-75 group-hover:opacity-90 transition-opacity" />
-              
-              <div className="absolute top-4 left-4">
-                <Badge variant="default" className="bg-white/95 text-stone-800 capitalize backdrop-blur-md text-[10px] font-semibold tracking-wider px-3 py-1 shadow-xs">
-                  {item.category}
-                </Badge>
-              </div>
+        {filteredItems.map((item) => {
+          const isHairWork = item.category === "cabello";
+          return (
+            <div
+              key={item.id}
+              className={`group relative overflow-hidden rounded-3xl shadow-sm border border-rose-100/70 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-rose-950/10 ${
+                isHairWork ? "bg-white" : "bg-stone-100"
+              }`}
+            >
+              <div className="aspect-4/5 w-full relative overflow-hidden">
+                <img
+                  src={item.imageUrl}
+                  alt={item.title}
+                  className={`h-full w-full transition-transform duration-700 ${
+                    isHairWork
+                      ? "object-contain p-3 pb-24 group-hover:scale-104"
+                      : "object-cover group-hover:scale-108"
+                  }`}
+                  loading="lazy"
+                />
+                <div
+                  className={`absolute inset-0 transition-opacity ${
+                    isHairWork
+                      ? "bg-gradient-to-t from-stone-950/90 via-stone-950/25 to-transparent opacity-90"
+                      : "bg-gradient-to-t from-stone-950/85 via-stone-950/20 to-transparent opacity-75 group-hover:opacity-90"
+                  }`}
+                />
 
-              <div className="absolute bottom-5 left-5 right-5 text-white space-y-1">
-                <span className="text-[10px] uppercase font-bold tracking-widest text-rose-300 block">
-                  Shirley Ram · Sr.Makeup
-                </span>
-                <h4 className="font-serif text-xl font-bold leading-snug drop-shadow-sm">
-                  {item.title}
-                </h4>
-                {item.description && (
-                  <p className="text-xs text-stone-200 line-clamp-2 pt-1 font-light">
-                    {item.description}
-                  </p>
-                )}
+                <div className="absolute top-4 left-4">
+                  <Badge
+                    variant="default"
+                    className="bg-white/95 text-stone-800 capitalize backdrop-blur-md text-[10px] font-semibold tracking-wider px-3 py-1 shadow-xs border border-rose-100/70"
+                  >
+                    {isHairWork ? "Peinados" : item.category}
+                  </Badge>
+                </div>
+
+                <div className="absolute bottom-5 left-5 right-5 text-white space-y-1">
+                  <span className="text-[10px] uppercase font-bold tracking-widest text-rose-300 block">
+                    Shirley Ram · Sr.Makeup
+                  </span>
+                  <h4 className="font-serif text-xl font-bold leading-snug drop-shadow-sm">
+                    {item.title}
+                  </h4>
+                  {item.description && (
+                    <p className="text-xs text-stone-200 line-clamp-2 pt-1 font-light">
+                      {item.description}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
